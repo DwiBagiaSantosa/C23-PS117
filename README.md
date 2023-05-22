@@ -1,4 +1,4 @@
-# C23-PS117
+# C23-PS117 Capstone Team
 
 
 - ## [&nbsp;&nbsp;Machine Learning](https://github.com/DwiBagiaSantosa/C23-PS117/tree/ml)
