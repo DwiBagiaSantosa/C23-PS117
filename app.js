@@ -15,7 +15,7 @@ app.get('/', (req, res) => {res.send('This is first page')});
 app.use(authRouter);
 
 // connection
-const dbConnection = 'mongodb+srv://gasyo_user:bagas361@cluster0.hgxuzq2.mongodb.net/node_auth';
+const dbConnection = '';
 mongoose.connect(dbConnection, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex:true })
   .then((result) => app.listen(port))
   .catch((err) => console.log(err));
