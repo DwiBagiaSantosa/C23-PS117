@@ -1,21 +1,22 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const authRouter = require('./router/authRoutes');
 const cookieParser = require('cookie-parser');
+const { verifyToken } = require('./middleware/authMiddleware');
+require('dotenv').config();
 
 const app = express();
-const port = 5000;
+const port = process.env.PORT || 5000;
 
 // middleware
 app.use(express.json());
 app.use(cookieParser());
 
 // routes
-app.get('/', (req, res) => {res.send('This is first page')});
+app.get('/dashboard', verifyToken, (req, res) => {res.send('This is Dashboard')});
+app.get('/', (req, res) => {res.send('This is Homepage')});
 app.use(authRouter);
 
 // connection
-const dbConnection = '';
-mongoose.connect(dbConnection, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex:true })
-  .then((result) => app.listen(port))
-  .catch((err) => console.log(err));
+app.listen(port, () => {
+  console.log(`server running on port: ${port}`);
+});
