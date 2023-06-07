@@ -36,6 +36,11 @@ android {
     buildFeatures {
         viewBinding true
     }
+    aaptOptions {
+        noCompress "tflite"
+        noCompress "lite"
+    }
+
 
 }
 
@@ -61,5 +66,9 @@ dependencies {
     kapt 'androidx.room:room-compiler:2.3.0'
 
     implementation 'com.google.code.gson:gson:2.8.8'
+
+
+    // ml
+    implementation 'org.tensorflow:tensorflow-lite:2.12.0'
 
 }

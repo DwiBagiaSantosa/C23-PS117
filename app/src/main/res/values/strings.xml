@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">CalorieSense</string>
+    <string name="log_out">Log Out</string>
+    <string name="more_menu">More Menu</string>
 
 
 </resources>

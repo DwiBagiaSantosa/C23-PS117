@@ -3,24 +3,113 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center"
     android:orientation="vertical"
+    android:background="#14BD96"
+
     tools:context=".activities.MainActivity">
 
-    <TextView
-        android:id="@+id/tv_welcome"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="CS23-PS117"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="310dp"
+        android:layout_height="300dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="24dp"
+        app:cardCornerRadius="16dp">
+
+        <TextView
+            android:id="@+id/daily_cal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="24dp"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:text="Your daily calorie needs"
+            tools:text="Your daily calorie needs" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="70dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/ed_basic_target"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:drawableStart="@drawable/ic_baseline_flag_24"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/ed_food"
+                app:layout_constraintEnd_toStartOf="@+id/ed_food"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="parent"
+                android:text="Basic Target\n2.107"
+                tools:text="Basic Target\n2.107" />
+
+            <TextView
+                android:id="@+id/ed_food"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="24dp"
+                android:drawableStart="@drawable/ic_baseline_fastfood_24"
+                android:gravity="center_horizontal"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="@+id/ed_basic_target"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/ed_basic_target"
+                app:layout_constraintTop_toTopOf="@+id/ed_basic_target"
+                android:text="Food\n0"
+                tools:text="Food\n0" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <FrameLayout
+            android:layout_width="300dp"
+            android:layout_height="110dp"
+            android:layout_marginVertical="150dp"
+            android:layout_gravity="center_horizontal">
+
+
+            <ImageView
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/circlebackground"
+                android:scaleType="centerCrop" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Your Text"
+                tools:text="Description"
+                android:textSize="15sp"
+                android:textColor="@android:color/black" />
+
+        </FrameLayout>
+    </androidx.cardview.widget.CardView>
+
 
     <Button
-        android:id="@+id/btn_logout"
+        android:id="@+id/bt_classif"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Logout" />
+        android:backgroundTint="@color/white"
+        android:textColor="@color/black"
+        android:text="Clasification" />
 
 </LinearLayout>

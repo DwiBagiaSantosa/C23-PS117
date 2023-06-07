@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_user"
+        android:title=""
+        app:actionLayout="@layout/user_logo"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_title"
+        android:title="CalorieSense"
+        android:enabled="false"
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_more_menu"
+        android:icon="@drawable/ic_baseline_density_medium_24"
+        android:title="@string/more_menu"
+        app:showAsAction="always">
+
+        <menu>
+            <item
+                android:id="@+id/action_logout"
+                android:title="@string/log_out"
+                app:showAsAction="never" />
+        </menu>
+    </item>
+</menu>
