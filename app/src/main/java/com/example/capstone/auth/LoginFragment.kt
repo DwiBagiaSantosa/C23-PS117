@@ -16,6 +16,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.capstone.R
 import com.example.capstone.databinding.FragmentLoginBinding
 import com.example.capstone.response.LoginResponse
+import com.example.capstone.response.LoginResult
 import com.example.capstone.utils.Preference
 import com.example.capstone.utils.Result
 import com.example.capstone.utils.ViewModelFactory
@@ -64,7 +65,7 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun handleLoginResult(result: Result<LoginResponse>) {
+    private fun handleLoginResult(result: Result<LoginResult>) {
         when (result) {
             is Result.Loading -> {
                 showLoading(true)
@@ -81,14 +82,21 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun processLogin(data: LoginResponse) {
-        if (data.error) {
-            Toast.makeText(requireContext(), data.message, Toast.LENGTH_LONG).show()
-        } else {
-            Preference.saveToken(data.loginResult.token, requireContext())
-            findNavController().navigate(R.id.action_loginFragment_to_mainActivity)
-            requireActivity().finish()
-        }
+
+    private fun processLogin(data: LoginResult) {
+
+        val userId = data.userId
+        val name = data.name
+        val gender = data.gender
+        val age = data.age
+        val height = data.height
+        val weight = data.weight
+        val bmr = data.bmr
+        val token = data.token
+
+        Preference.saveToken(token, requireContext())
+        findNavController().navigate(R.id.action_loginFragment_to_mainActivity)
+        requireActivity().finish()
     }
 
     private fun onBackPressed() {

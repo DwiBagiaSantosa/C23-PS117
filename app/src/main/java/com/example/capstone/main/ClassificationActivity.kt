@@ -59,7 +59,6 @@ class ClassificationActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        // Your code for handling the result goes here
         if(requestCode == 1){
             var uri = data?.data;
             val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver,uri)
