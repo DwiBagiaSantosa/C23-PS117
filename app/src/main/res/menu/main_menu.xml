@@ -3,23 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_user"
-        android:title=""
-        app:actionLayout="@layout/user_logo"
-        app:showAsAction="always" />
-
-    <item
-        android:id="@+id/action_title"
-        android:title="CalorieSense"
-        android:enabled="false"
-        app:showAsAction="always" />
-
-    <item
         android:id="@+id/action_more_menu"
-        android:icon="@drawable/ic_baseline_density_medium_24"
+        android:icon="@drawable/ic_baseline_more_vert"
         android:title="@string/more_menu"
-        app:showAsAction="always">
-
+        app:showAsAction="ifRoom">
         <menu>
             <item
                 android:id="@+id/action_logout"

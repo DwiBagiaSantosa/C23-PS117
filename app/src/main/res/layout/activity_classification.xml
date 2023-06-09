@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#14BD96"
+    tools:context=".main.ClassificationActivity">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="370sp"
+                android:layout_height="370sp"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/btn_gallery"
+                android:layout_marginTop="16dp" />
+
+            <TextView
+                android:id="@+id/classified"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/imageView"
+                android:layout_marginTop="16dp"
+                android:text="Classified as:"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/result"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/classified"
+                android:layout_marginTop="8dp"
+                android:text=""
+                android:textColor="#C30000"
+                android:textSize="27sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/confi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/imageView"
+                android:layout_marginTop="90dp"
+                android:text="Confident:"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/confident"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/confi"
+                android:layout_marginTop="8dp"
+                android:text=""
+                android:textColor="#C30000"
+                android:textSize="27sp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btn_camera"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Take Picture"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="16dp"
+                android:textSize="21sp"
+                android:textStyle="bold"
+                />
+
+            <Button
+                android:id="@+id/btn_gallery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Launch Gallery"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@id/btn_camera"
+                android:layout_marginTop="16dp"
+                android:textSize="21sp"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>
