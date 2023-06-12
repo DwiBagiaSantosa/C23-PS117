@@ -120,8 +120,8 @@ const resetPassword = async (req, res) => {
     let config = {
       service : 'gmail',
       auth : {
-          user: EMAIL,
-          pass: password
+          user: process.env.EMAIL,
+          pass: process.env.PASSWORD
       }
     }
 

@@ -1,8 +1,9 @@
 const express = require('express');
-const authRouter = require('./router/authRoutes');
 const cookieParser = require('cookie-parser');
-const { verifyToken } = require('./middleware/authMiddleware');
 require('dotenv').config();
+
+const authRouter = require('./router/authRoutes');
+const { verifyToken } = require('./middleware/authMiddleware');
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -12,9 +13,9 @@ app.use(express.json());
 app.use(cookieParser());
 
 // routes
-app.get('/dashboard', verifyToken, (req, res) => {res.send('This is Dashboard')});
-app.get('/', (req, res) => {res.send('This is Homepage')});
-app.use(authRouter);
+app.get('/', (req, res) => {res.send('This root path')});
+app.use('/', authRouter);
+app.get('/users', verifyToken, (req, res) => {res.send('This is Dashboard User')});
 
 // connection
 app.listen(port, () => {
