@@ -8,7 +8,7 @@ Proudly presented by Capstone Team
 - We train the model using transfer learning with MobileNet feature extractor
 - We evaluate the model performance
 
-##Dataset:
+Dataset:
 - bakso 
 - cheesecake 
 - chicken_wings 
