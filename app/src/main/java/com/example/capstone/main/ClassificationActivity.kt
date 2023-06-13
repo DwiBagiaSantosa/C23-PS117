@@ -12,7 +12,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import com.example.capstone.R
-import com.example.capstone.network.Classifier
+import com.example.capstone.classification.Classifier
 
 class ClassificationActivity : AppCompatActivity() {
 
@@ -26,18 +26,19 @@ class ClassificationActivity : AppCompatActivity() {
     lateinit var imageView: ImageView
     lateinit var res: TextView
     lateinit var conf: TextView
+    lateinit var calories : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_classification)
         initClassifier()
 
-        camera = findViewById<Button>(R.id.btn_camera)
-        gallery = findViewById<Button>(R.id.btn_gallery)
-
-        res = findViewById<TextView>(R.id.result)
-        conf = findViewById<TextView>(R.id.confident)
-        imageView = findViewById<ImageView>(R.id.imageView)
+        camera = findViewById(R.id.btn_camera)
+        gallery = findViewById(R.id.btn_gallery)
+        calories = findViewById(R.id.calories)
+        res = findViewById(R.id.result)
+        conf = findViewById(R.id.confident)
+        imageView = findViewById(R.id.imageView)
 
         camera.setOnClickListener {
             if (checkSelfPermission(Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
@@ -59,17 +60,17 @@ class ClassificationActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == 1){
-            var uri = data?.data;
-            val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver,uri)
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            val uri = data?.data
+            val bitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, uri)
             imageView.setImageBitmap(bitmap)
             val result = classifier.recognizeImage(bitmap)
 
-            res.setText(result.get(0).title)
-            conf.setText(result.get(0).confidence.toString())
-
-
+            res.text = result[0].title
+            conf.text = result[0].confidence.toString()
+            calories.text = result[0].calories.toString()
         }
+
         if (requestCode == 3) {
             val image = data?.extras?.get("data") as Bitmap
             val dimension = image.width.coerceAtMost(image.height)
@@ -79,10 +80,12 @@ class ClassificationActivity : AppCompatActivity() {
             val bitmap = Bitmap.createScaledBitmap(thumbnail, 224, 224, false)
             val result = classifier.recognizeImage(bitmap)
 
-            res.setText(result.get(0).title)
-            conf.setText(result.get(0).confidence.toString())
+            res.text = result[0].title
+            conf.text = result[0].confidence.toString()
+            calories.text = result[0].calories.toString()
         }
     }
+
 
     override fun onBackPressed() {
         super.onBackPressed()

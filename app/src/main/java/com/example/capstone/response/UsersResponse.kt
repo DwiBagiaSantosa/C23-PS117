@@ -1,8 +1,11 @@
 package com.example.capstone.response
 
-data class UsersResponse(val users: List<User>)
+data class UsersResponse(
+    val users: List<User>
+    )
 
 data class User(
+    val id : String,
     val name: String,
     val email: String,
     val password: String,
@@ -10,5 +13,6 @@ data class User(
     val age: Int,
     val height: Double,
     val weight: Double,
-    val bmr: Double
+    val bmr: Double,
+    val token: String
     )

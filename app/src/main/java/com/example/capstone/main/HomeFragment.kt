@@ -9,12 +9,17 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.capstone.R
+import com.example.capstone.auth.LoginViewModel
 import com.example.capstone.network.ApiConfig
 import com.example.capstone.network.AuthRepository
+import com.example.capstone.response.LoginResult
 import com.example.capstone.utils.Result
+import com.example.capstone.utils.ViewModelFactory
 import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
@@ -23,6 +28,15 @@ class HomeFragment : Fragment() {
 
     private lateinit var edBasicTarget : TextView
     private lateinit var yourBMRText: TextView
+    private lateinit var tvName: TextView
+    private lateinit var tvGender: TextView
+    private lateinit var tvAge: TextView
+    private lateinit var tvHeight: TextView
+    private lateinit var tvWeight: TextView
+    private lateinit var tvBMR: TextView
+
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,8 +45,17 @@ class HomeFragment : Fragment() {
 
 
         val view = inflater.inflate(R.layout.fragment_home, container, false)
-        yourBMRText = view.findViewById(R.id.your_bmr_text)
+
         edBasicTarget = view.findViewById(R.id.ed_basic_target)
+        tvName = view.findViewById(R.id.tvName)
+        tvGender = view.findViewById(R.id.tvGender)
+        tvAge = view.findViewById(R.id.tvAge)
+        tvHeight = view.findViewById(R.id.tvHeight)
+        tvWeight = view.findViewById(R.id.tvWeight)
+        tvBMR = view.findViewById(R.id.tvBMR)
+        yourBMRText = view.findViewById(R.id.your_bmr_text)
+
+
 
         classificationButton = view.findViewById(R.id.bt_classif)
         classificationButton.setOnClickListener {
@@ -52,6 +75,18 @@ class HomeFragment : Fragment() {
                     if (users.isNotEmpty()) {
                         val user = users[0]
                         val bmr = user.bmr
+                        val names = user.name
+                        val genders = user.gender
+                        val ages = user.age.toString()
+                        val heights = user.height.toString()
+                        val weights = user.weight.toString()
+
+                        tvName.text = "$names"
+                        tvGender.text = "$genders"
+                        tvAge.text = "$ages"
+                        tvHeight.text = "$heights"
+                        tvWeight.text = "$weights"
+                        tvBMR.text = "$bmr"
                         yourBMRText.text = "$bmr"
                         edBasicTarget.text = "Basic Target \n" + "$bmr"
                     } else {
@@ -71,6 +106,7 @@ class HomeFragment : Fragment() {
         //...
 
         return view
+
     }
 
     //...

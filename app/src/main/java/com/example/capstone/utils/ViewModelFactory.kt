@@ -16,16 +16,16 @@ class ViewModelFactory(private val context: Context) : ViewModelProvider.Factory
         return when {
 
             modelClass.isAssignableFrom(RegisterViewModel::class.java) -> {
-                RegisterViewModel(creatAuthRepository()) as T
+                RegisterViewModel(createAuthRepository()) as T
             }
             modelClass.isAssignableFrom(LoginViewModel::class.java) -> {
-                LoginViewModel(creatAuthRepository()) as T
+                LoginViewModel(createAuthRepository()) as T
             }
             else -> throw IllegalArgumentException("Unknown ViewModel Class")
         }
     }
 
-    private fun creatAuthRepository(): AuthRepository {
+    private fun createAuthRepository(): AuthRepository {
         val apiService = ApiConfig.getApiService(context)
         return AuthRepository(apiService)
     }

@@ -13,32 +13,42 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_margin="16dp"
-        app:cardCornerRadius="8dp"
+
+        app:cardCornerRadius="16dp"
         app:cardElevation="4dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:padding="16dp">
 
-
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="16dp"
+                android:text="Classification Images"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="370sp"
                 android:layout_height="370sp"
+                android:layout_below="@id/title"
                 android:layout_centerHorizontal="true"
-                android:layout_below="@id/btn_gallery"
                 android:layout_marginTop="16dp" />
 
             <TextView
                 android:id="@+id/classified"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
+                android:layout_alignParentStart="true"
                 android:layout_below="@id/imageView"
                 android:layout_marginTop="16dp"
-                android:text="Classified as:"
+                android:text="Classified as :"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -47,22 +57,22 @@
                 android:id="@+id/result"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@id/classified"
-                android:layout_marginTop="8dp"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@id/imageView"
+                android:layout_marginTop="16dp"
                 android:text=""
                 android:textColor="#C30000"
-                android:textSize="27sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/confi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@id/imageView"
-                android:layout_marginTop="90dp"
-                android:text="Confident:"
+                android:layout_alignParentStart="true"
+                android:layout_below="@id/classified"
+                android:layout_marginTop="8dp"
+                android:text="Confident :"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
@@ -71,35 +81,70 @@
                 android:id="@+id/confident"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_below="@id/confi"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@id/result"
                 android:layout_marginTop="8dp"
                 android:text=""
                 android:textColor="#C30000"
-                android:textSize="27sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/btn_camera"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Take Picture"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="16dp"
-                android:textSize="21sp"
-                android:textStyle="bold"
-                />
 
-            <Button
-                android:id="@+id/btn_gallery"
+
+            <TextView
+                android:id="@+id/cal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Launch Gallery"
                 android:layout_centerHorizontal="true"
-                android:layout_below="@id/btn_camera"
-                android:layout_marginTop="16dp"
-                android:textSize="21sp"
+                android:layout_alignParentStart="true"
+                android:layout_below="@id/confi"
+                android:layout_marginTop="8dp"
+                android:text="Calories :"
+                android:textColor="@color/black"
+                android:textSize="20sp"
                 android:textStyle="bold" />
+
+
+            <TextView
+                android:id="@+id/calories"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@id/confident"
+                android:layout_marginTop="8dp"
+                android:text=""
+                android:textColor="#C30000"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/calories"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_camera"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:text="Take Picture"
+                    android:textSize="21sp"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/btn_gallery"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_margin="5dp"
+                    android:text="Launch Gallery"
+                    android:textSize="21sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
 
         </RelativeLayout>
     </androidx.cardview.widget.CardView>

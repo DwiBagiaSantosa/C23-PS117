@@ -1,4 +1,4 @@
-package com.example.capstone.network
+package com.example.capstone.classification
 
 import android.content.res.AssetManager
 import android.graphics.Bitmap
@@ -9,7 +9,9 @@ import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.MappedByteBuffer
 import java.nio.channels.FileChannel
-import java.util.PriorityQueue
+import java.util.*
+import kotlin.Comparator
+import kotlin.collections.ArrayList
 
 class Classifier (assetManager: AssetManager, modelPath: String, labelPath: String, inputSize: Int){
     private var interpreter: Interpreter
@@ -21,15 +23,7 @@ class Classifier (assetManager: AssetManager, modelPath: String, labelPath: Stri
     private val MAX_RESULTS = 3
     private val THRESHOLD = 0.4f
 
-    data class Recognition(
-        var id: String = "",
-        var title: String = "",
-        var confidence: Float = 0F
-    )  {
-        override fun toString(): String {
-            return "Title = $title, Confidence = $confidence)"
-        }
-    }
+
 
     init {
         val options = Interpreter.Options()
@@ -79,31 +73,51 @@ class Classifier (assetManager: AssetManager, modelPath: String, labelPath: Stri
         return byteBuffer
     }
 
-    private fun getSortedResult(labelProbArray: Array<FloatArray>): List<Classifier.Recognition> {
-        Log.d("Classifier", "List Size:(%d, %d, %d)".format(labelProbArray.size,labelProbArray[0].size,lableList.size))
-
+    private fun getSortedResult(labelProbArray: Array<FloatArray>): List<Recognition> {
         val pq = PriorityQueue(
             MAX_RESULTS,
-            Comparator<Recognition> {
-                    (_, _, confidence1), (_, _, confidence2)
-                -> java.lang.Float.compare(confidence1, confidence2) * -1
+            Comparator<Recognition> { (_, _, confidence1), (_, _, confidence2) ->
+                java.lang.Float.compare(confidence1, confidence2) * -1
             })
 
         for (i in lableList.indices) {
             val confidence = labelProbArray[0][i]
             if (confidence >= THRESHOLD) {
-                pq.add(Classifier.Recognition("" + i,
-                    if (lableList.size > i) lableList[i] else "Unknown", confidence)
-                )
+                val title = if (lableList.size > i) lableList[i] else "Unknown"
+                var calories = 0
+                when (title.toLowerCase(Locale.ROOT)) {
+                    "bakso" -> calories = 218
+                    "cheesecake" -> calories = 228
+                    "chicken_wings" -> calories = 458
+                    "churros" -> calories = 116
+                    "donuts"-> calories = 198
+                    "egg"-> calories = 70
+                    "french_fries"-> calories = 196
+                    "fried_rice"-> calories = 350
+                    "gado"-> calories = 132
+                    "hamburger"-> calories = 325
+                    "hot_dog"-> calories = 242
+                    "mac_and_cheese"-> calories = 290
+                    "pancakes"-> calories = 100
+                    "pizza"-> calories = 250
+                    "rendang"-> calories = 193
+                    "sate"-> calories = 80
+                    "soup"-> calories = 70
+                    "spaghetti"-> calories = 200
+                    "takoyaki"-> calories = 200
+                    "waffles"-> calories = 150
+                }
+                pq.add(Recognition("" + i, title, confidence, calories))
             }
         }
-        Log.d("Classifier", "pqsize:(%d)".format(pq.size))
 
-        val recognitions = ArrayList<Classifier.Recognition>()
+        val recognitions = ArrayList<Recognition>()
         val recognitionsSize = Math.min(pq.size, MAX_RESULTS)
         for (i in 0 until recognitionsSize) {
             recognitions.add(pq.poll())
         }
         return recognitions
     }
+
+
 }

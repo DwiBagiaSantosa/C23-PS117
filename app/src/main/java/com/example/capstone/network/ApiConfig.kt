@@ -31,10 +31,11 @@ class ApiConfig {
             val token = sharedPref.getString("token", null).toString()
 
             val retrofit = Retrofit.Builder()
-                .baseUrl("https://test-capstone.vercel.app/")
+                .baseUrl("https://test-capstone.vercel.app")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(getInterceptor(token))
                 .build()
+
             return retrofit.create(ApiService::class.java)
         }
     }

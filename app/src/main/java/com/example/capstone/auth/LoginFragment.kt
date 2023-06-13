@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
@@ -29,6 +30,8 @@ class LoginFragment : Fragment() {
     private val loginViewModel: LoginViewModel by viewModels {
         ViewModelFactory(requireContext())
     }
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,7 +68,7 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun handleLoginResult(result: Result<LoginResult>) {
+    private fun handleLoginResult(result: Result<LoginResponse>) {
         when (result) {
             is Result.Loading -> {
                 showLoading(true)
@@ -74,6 +77,8 @@ class LoginFragment : Fragment() {
             is Result.Success -> {
                 processLogin(result.data)
                 showLoading(false)
+
+
             }
             is Result.Error -> {
                 showLoading(false)
@@ -83,20 +88,14 @@ class LoginFragment : Fragment() {
     }
 
 
-    private fun processLogin(data: LoginResult) {
-
-        val userId = data.userId
-        val name = data.name
-        val gender = data.gender
-        val age = data.age
-        val height = data.height
-        val weight = data.weight
-        val bmr = data.bmr
-        val token = data.token
-
-        Preference.saveToken(token, requireContext())
-        findNavController().navigate(R.id.action_loginFragment_to_mainActivity)
-        requireActivity().finish()
+    private fun processLogin(data: LoginResponse) {
+        if (data.error) {
+            Toast.makeText(requireContext(), data.message, Toast.LENGTH_LONG).show()
+        } else {
+            Preference.saveToken(data.loginResult.token, requireContext())
+            findNavController().navigate(R.id.action_loginFragment_to_mainActivity)
+            requireActivity().finish()
+        }
     }
 
     private fun onBackPressed() {
