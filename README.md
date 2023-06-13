@@ -7,3 +7,26 @@ Proudly presented by Capstone Team
 - We save each class name that we have into labels.txt
 - We train the model using transfer learning with MobileNet feature extractor
 - We evaluate the model performance
+
+##Dataset:
+- bakso 
+- cheesecake 
+- chicken_wings 
+- churros 
+- donuts 
+- egg 
+- french_fries 
+- fried_rice 
+- gado 
+- hamburger 
+- hot_dog 
+- mac_and_cheese
+- pancakes 
+- pizza 
+- rendang
+- sate 
+- soup 
+- spaghetti 
+- sushi 
+- takoyaki 
+- waffles 
