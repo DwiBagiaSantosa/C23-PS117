@@ -3,6 +3,7 @@ package com.example.capstone.network
 
 import com.example.capstone.response.LoginResponse
 import com.example.capstone.response.RegisterResponse
+import com.example.capstone.response.UpdateBMRResponse
 import com.example.capstone.response.UsersResponse
 import retrofit2.http.*
 
@@ -27,4 +28,11 @@ interface ApiService {
         @Field("password") password: String
     ): LoginResponse
 
+
+    @FormUrlEncoded
+    @POST("update-bmr")
+    suspend fun updateBMR(
+        @Field("userId") userId: String,
+        @Field("bmr") bmr: Double
+    ): UpdateBMRResponse
 }

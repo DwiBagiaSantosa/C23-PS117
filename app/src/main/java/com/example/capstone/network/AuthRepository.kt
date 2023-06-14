@@ -42,6 +42,18 @@ class AuthRepository(private val apiService: ApiService) {
         }
     }
 
+    suspend fun updateBMR(userId: String, bmr: Double): Result<Unit> {
+        return try {
+            apiService.updateBMR(userId, bmr)
+            Result.Success(Unit)
+        } catch (e: Exception) {
+            Log.e("AuthRepository", "updateBMR: ${e.message.toString()}")
+            Result.Error(e.message.toString())
+        }
+    }
+
+
+
 
 
 }

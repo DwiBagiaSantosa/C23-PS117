@@ -118,6 +118,8 @@
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -130,8 +132,10 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
-                    android:text="Picture"
-                    android:textSize="21sp"
+                    android:drawableLeft="@drawable/ic_baseline_camera_alt_24"
+                    android:drawablePadding="8dp"
+                    android:text="Add Photo"
+                    android:textSize="15sp"
                     android:textStyle="bold" />
 
                 <Button
@@ -140,14 +144,14 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_margin="5dp"
+                    android:drawableLeft="@drawable/ic_baseline_add_photo_alternate_24"
+                    android:drawablePadding="8dp"
                     android:text="Gallery"
-                    android:textSize="21sp"
+                    android:textSize="15sp"
                     android:textStyle="bold" />
 
 
-
             </LinearLayout>
-
 
             <Button
                 android:id="@+id/btn_submit"
@@ -158,10 +162,14 @@
                 android:layout_marginTop="60dp"
                 android:layout_marginBottom="80dp"
                 android:text="Submit"
-                android:textSize="21sp"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
+
+
         </RelativeLayout>
+
+
 
     </androidx.cardview.widget.CardView>
 </RelativeLayout>

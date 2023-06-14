@@ -1,6 +1,5 @@
 package com.example.capstone.main
 
-
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -18,9 +17,9 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-
     private lateinit var edBasicTarget: TextView
     private lateinit var yourBMRText: TextView
+    private lateinit var totalFood : TextView
     private lateinit var classificationButton: FloatingActionButton
     private lateinit var profileButton: FloatingActionButton
 
@@ -47,7 +46,10 @@ class HomeFragment : Fragment() {
         classificationButton.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_classificationFragment)
         }
+    }
 
+    override fun onResume() {
+        super.onResume()
         val loggedInUser = Preference.getLoggedInUser(requireContext())
         yourBMRText.text = loggedInUser.bmr.toString()
         edBasicTarget.text = "Basic Target \n" + loggedInUser.bmr.toString()

@@ -31,7 +31,7 @@ object Preference {
     private const val PREF_NAME = "onSignIn"
 
     fun getLoggedInUser(context: Context): User {
-        val sharedPref = Preference.initPref(context, PREF_NAME)
+        val sharedPref = initPref(context, PREF_NAME)
 
         return User(
             id = sharedPref.getString("id", "")!!,
@@ -44,6 +44,12 @@ object Preference {
             weight = sharedPref.getFloat("weight", 0f).toDouble(),
             token = sharedPref.getString("token", "")!!
         )
+    }
+
+    fun updateBMR(bmr: Double, context: Context) {
+        val editor = editorPreference(context, PREF_NAME)
+        editor.putFloat("bmr", bmr.toFloat())
+        editor.apply()
     }
 
 

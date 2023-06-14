@@ -1,6 +1,7 @@
 package com.example.capstone.main
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -13,17 +14,22 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 
 import com.example.capstone.classification.Classifier
 import com.example.capstone.databinding.FragmentClassificationBinding
-
+import com.example.capstone.network.ApiConfig
+import com.example.capstone.response.User
+import com.example.capstone.utils.Preference
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class ClassificationFragment : Fragment() {
-
 
     private var _binding: FragmentClassificationBinding? = null
     private val binding get() = _binding!!
@@ -39,6 +45,8 @@ class ClassificationFragment : Fragment() {
     private lateinit var resultTextView: TextView
     private lateinit var confidenceTextView: TextView
     private lateinit var caloriesTextView: TextView
+    private lateinit var submitButton: Button
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,12 +61,18 @@ class ClassificationFragment : Fragment() {
 
         initClassifier()
 
+        submitButton = binding.btnSubmit
         cameraButton = binding.btnCamera
         galleryButton = binding.btnGallery
         caloriesTextView = binding.calories
         resultTextView = binding.result
         confidenceTextView = binding.confident
         imageView = binding.imageView
+
+
+        val loggedInUser = Preference.getLoggedInUser(requireContext())
+
+
 
         cameraButton.setOnClickListener {
             if (ContextCompat.checkSelfPermission(
@@ -80,11 +94,59 @@ class ClassificationFragment : Fragment() {
             )
             startActivityForResult(galleryIntent, 1)
         }
+
+        submitButton.setOnClickListener {
+            val calories = caloriesTextView.text.toString().toDouble()
+            updateBMR(calories, requireContext())
+        }
+
     }
 
     private fun initClassifier() {
         classifier = Classifier(requireContext().assets, mModelPath, mLabelPath, mInputSize)
     }
+
+    private fun updateBMR(calories: Double,context: Context) {
+        val loggedInUser = Preference.getLoggedInUser(requireContext())
+
+        val newBMR = loggedInUser.bmr - calories
+
+        val updatedUser = User(
+            id = loggedInUser.id,
+            name = loggedInUser.name,
+            email = loggedInUser.email,
+            age = loggedInUser.age,
+            gender = loggedInUser.gender,
+            bmr = newBMR,
+            height = loggedInUser.height,
+            weight = loggedInUser.weight,
+            token = loggedInUser.token
+        )
+
+        val apiService = ApiConfig.getApiService(requireContext())
+
+        CoroutineScope(Dispatchers.Main).launch {
+            try {
+                val response = apiService.updateBMR(updatedUser.id, newBMR)
+                if (!response.error) {
+
+                    Toast.makeText(requireContext(), "BMR updated successfully", Toast.LENGTH_SHORT).show()
+                } else {
+
+                    Toast.makeText(requireContext(), "Failed to update BMR", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) {
+
+                Toast.makeText(requireContext(), "Error updating BMR: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        Preference.updateBMR(newBMR, requireContext())
+        Preference.saveToken(updatedUser.token, requireContext())
+
+    }
+
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
