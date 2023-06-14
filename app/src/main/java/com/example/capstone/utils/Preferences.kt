@@ -2,6 +2,7 @@ package com.example.capstone.utils
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.example.capstone.response.User
 
 object Preference {
     fun initPref(context: Context, name: String): SharedPreferences {
@@ -25,6 +26,24 @@ object Preference {
         editor.remove("token")
         editor.remove("status")
         editor.apply()
+    }
+
+    private const val PREF_NAME = "onSignIn"
+
+    fun getLoggedInUser(context: Context): User {
+        val sharedPref = Preference.initPref(context, PREF_NAME)
+
+        return User(
+            id = sharedPref.getString("id", "")!!,
+            name = sharedPref.getString("name", "")!!,
+            email = sharedPref.getString("email", "")!!,
+            age = sharedPref.getInt("age", 0),
+            gender = sharedPref.getString("gender", "")!!,
+            bmr = sharedPref.getFloat("bmr", 0f).toDouble(),
+            height = sharedPref.getFloat("height", 0f).toDouble(),
+            weight = sharedPref.getFloat("weight", 0f).toDouble(),
+            token = sharedPref.getString("token", "")!!
+        )
     }
 
 

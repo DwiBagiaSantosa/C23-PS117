@@ -104,6 +104,7 @@ class Classifier (assetManager: AssetManager, modelPath: String, labelPath: Stri
                     "sate"-> calories = 80
                     "soup"-> calories = 70
                     "spaghetti"-> calories = 200
+                    "sushi" -> calories = 150
                     "takoyaki"-> calories = 200
                     "waffles"-> calories = 150
                 }

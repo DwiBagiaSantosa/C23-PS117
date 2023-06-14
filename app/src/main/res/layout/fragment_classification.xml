@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#14BD96"
-    tools:context=".main.ClassificationActivity">
+    tools:context=".main.ClassificationFragment">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
@@ -130,7 +130,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
-                    android:text="Take Picture"
+                    android:text="Picture"
                     android:textSize="21sp"
                     android:textStyle="bold" />
 
@@ -140,12 +140,28 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:layout_margin="5dp"
-                    android:text="Launch Gallery"
+                    android:text="Gallery"
                     android:textSize="21sp"
                     android:textStyle="bold" />
 
+
+
             </LinearLayout>
 
+
+            <Button
+                android:id="@+id/btn_submit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/calories"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="60dp"
+                android:layout_marginBottom="80dp"
+                android:text="Submit"
+                android:textSize="21sp"
+                android:textStyle="bold" />
+
         </RelativeLayout>
+
     </androidx.cardview.widget.CardView>
 </RelativeLayout>

@@ -12,13 +12,25 @@
         tools:layout="@layout/fragment_home">
 
         <action
-            android:id="@+id/action_homeFragment_to_classificationActivity"
-            app:destination="@id/classificationActivity" />
+            android:id="@+id/action_homeFragment_to_classificationFragment"
+            app:destination="@id/classificationFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
 
-    <activity
-        android:id="@+id/classificationActivity"
-        android:name="com.example.capstone.main.ClassificationActivity"
-        android:label="ClassificationActivity" />
+
+    <fragment
+        android:id="@+id/classificationFragment"
+        android:name="com.example.capstone.main.ClassificationFragment"
+        android:label="ClassificationFragment"
+        tools:layout="@layout/fragment_classification" />
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.capstone.main.ProfileFragment"
+        android:label="FragmentProfile"
+        tools:layout="@layout/fragment_profile" />
+
 
 </navigation>
