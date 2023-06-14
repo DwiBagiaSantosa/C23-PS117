@@ -9,6 +9,8 @@ data class LoginResult(
     val name: String,
     @SerializedName("email")
     val email: String,
+    @SerializedName("password")
+    val password: String,
     @SerializedName("gender")
     val gender: String,
     @SerializedName("age")
@@ -20,5 +22,5 @@ data class LoginResult(
     @SerializedName("bmr")
     val bmr: Double,
     @SerializedName("token")
-    val token: String,
+    val token: String
 )

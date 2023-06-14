@@ -1,5 +1,6 @@
 package com.example.capstone.network
 
+
 import com.example.capstone.response.LoginResponse
 import com.example.capstone.response.RegisterResponse
 import com.example.capstone.response.UsersResponse
@@ -25,12 +26,5 @@ interface ApiService {
         @Field("email") email: String,
         @Field("password") password: String
     ): LoginResponse
-
-
-    @GET("users")
-    suspend fun getUsers(): UsersResponse
-
-
-
 
 }

@@ -75,6 +75,7 @@ class LoginFragment : Fragment() {
 
 
 
+
     private fun handleLoginResult(result: Result<LoginResponse>) {
         when (result) {
             is Result.Loading -> {
@@ -85,6 +86,7 @@ class LoginFragment : Fragment() {
                 val loginResponse = result.data
                 val loggedInUser = User(
                     name = loginResponse.loginResult.name,
+                    email = loginResponse.loginResult.email,
                     age = loginResponse.loginResult.age,
                     gender = loginResponse.loginResult.gender,
                     bmr = loginResponse.loginResult.bmr,
@@ -108,14 +110,30 @@ class LoginFragment : Fragment() {
         if (loginResponse.error) {
             Toast.makeText(requireContext(), loginResponse.message, Toast.LENGTH_LONG).show()
         } else {
-            // Simpan data pengguna yang sudah login ke ViewModel atau repository jika diperlukan
+
             loginViewModel.setLoggedInUser(loggedInUser)
 
+
             Preference.saveToken(loginResponse.loginResult.token, requireContext())
+
+
+            val sharedPref = Preference.initPref(requireContext(), "onSignIn")
+            sharedPref.edit().apply {
+                putString("id", loggedInUser.id)
+                putString("name", loggedInUser.name)
+                putInt("age", loggedInUser.age)
+                putString("gender", loggedInUser.gender)
+                putFloat("bmr", loggedInUser.bmr.toFloat())
+                putFloat("height", loggedInUser.height.toFloat())
+                putFloat("weight", loggedInUser.weight.toFloat())
+                apply()
+            }
+
             findNavController().navigate(R.id.action_loginFragment_to_mainActivity)
             requireActivity().finish()
         }
     }
+
 
 
     private fun onBackPressed() {

@@ -27,9 +27,5 @@ object Preference {
         editor.apply()
     }
 
-    fun getToken(context: Context): String? {
-        val sharedPref = context.getSharedPreferences("onSignIn", Context.MODE_PRIVATE)
-        return sharedPref.getString("token", null)
-    }
 
 }

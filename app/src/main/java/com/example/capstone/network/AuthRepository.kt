@@ -44,15 +44,6 @@ class AuthRepository(private val apiService: ApiService) {
         }
     }
 
-    suspend fun getUsers(): Result<UsersResponse> {
-        return try {
-            val response = apiService.getUsers()
-            Result.Success(response)
-        } catch (e: Exception) {
-            Log.e("AuthRepository", "getUsers: ${e.message.toString()}")
-            Result.Error(e.message.toString())
-        }
-    }
 
 
 }
