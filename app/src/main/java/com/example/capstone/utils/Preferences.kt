@@ -13,10 +13,6 @@ object Preference {
         return sharedPref.edit()
     }
 
-    fun getToken(context: Context): String? {
-        val sharedPref = context.getSharedPreferences("onSignIn", Context.MODE_PRIVATE)
-        return sharedPref.getString("token", null)
-    }
 
     fun saveToken(token: String, context: Context) {
         val editor = editorPreference(context, "onSignIn")
@@ -30,4 +26,10 @@ object Preference {
         editor.remove("status")
         editor.apply()
     }
+
+    fun getToken(context: Context): String? {
+        val sharedPref = context.getSharedPreferences("onSignIn", Context.MODE_PRIVATE)
+        return sharedPref.getString("token", null)
+    }
+
 }

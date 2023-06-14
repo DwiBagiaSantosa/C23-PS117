@@ -17,7 +17,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.capstone.R
 import com.example.capstone.databinding.FragmentLoginBinding
 import com.example.capstone.response.LoginResponse
-import com.example.capstone.response.LoginResult
+import com.example.capstone.response.User
 import com.example.capstone.utils.Preference
 import com.example.capstone.utils.Result
 import com.example.capstone.utils.ViewModelFactory
@@ -51,22 +51,29 @@ class LoginFragment : Fragment() {
             val email = binding.edLoginEmail.text.toString()
             val password = binding.edLoginPassword.text.toString()
 
-            val inputMethodManager =
-                requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)
+            if (email.isNotEmpty()) {
+                val inputMethodManager =
+                    requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                inputMethodManager.hideSoftInputFromWindow(it.windowToken, 0)
 
-            showLoading(true)
+                showLoading(true)
 
-            loginViewModel.login(email, password).observe(viewLifecycleOwner) { result ->
-                result?.let { handleLoginResult(it) }
+                loginViewModel.login(email, password).observe(viewLifecycleOwner) { result ->
+                    result?.let { handleLoginResult(it) }
+                }
+            } else {
+                Toast.makeText(requireContext(), "Please enter your email", Toast.LENGTH_SHORT).show()
             }
         }
+
 
         val isFromRegister: Boolean? = arguments?.getBoolean("is_from_register")
         if (isFromRegister == true) {
             onBackPressed()
         }
     }
+
+
 
     private fun handleLoginResult(result: Result<LoginResponse>) {
         when (result) {
@@ -75,10 +82,20 @@ class LoginFragment : Fragment() {
                 binding.textView6.text = "Sedang Login..."
             }
             is Result.Success -> {
-                processLogin(result.data)
+                val loginResponse = result.data
+                val loggedInUser = User(
+                    name = loginResponse.loginResult.name,
+                    age = loginResponse.loginResult.age,
+                    gender = loginResponse.loginResult.gender,
+                    bmr = loginResponse.loginResult.bmr,
+                    height = loginResponse.loginResult.height.toDouble(),
+                    weight = loginResponse.loginResult.weight.toDouble(),
+                    id = loginResponse.loginResult.userId,
+                    token = loginResponse.loginResult.token
+                )
+                processLogin(loginResponse, loggedInUser)
+
                 showLoading(false)
-
-
             }
             is Result.Error -> {
                 showLoading(false)
@@ -87,16 +104,19 @@ class LoginFragment : Fragment() {
         }
     }
 
-
-    private fun processLogin(data: LoginResponse) {
-        if (data.error) {
-            Toast.makeText(requireContext(), data.message, Toast.LENGTH_LONG).show()
+    private fun processLogin(loginResponse: LoginResponse, loggedInUser: User) {
+        if (loginResponse.error) {
+            Toast.makeText(requireContext(), loginResponse.message, Toast.LENGTH_LONG).show()
         } else {
-            Preference.saveToken(data.loginResult.token, requireContext())
+            // Simpan data pengguna yang sudah login ke ViewModel atau repository jika diperlukan
+            loginViewModel.setLoggedInUser(loggedInUser)
+
+            Preference.saveToken(loginResponse.loginResult.token, requireContext())
             findNavController().navigate(R.id.action_loginFragment_to_mainActivity)
             requireActivity().finish()
         }
     }
+
 
     private fun onBackPressed() {
         requireActivity().onBackPressedDispatcher.addCallback(

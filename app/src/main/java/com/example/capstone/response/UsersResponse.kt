@@ -5,14 +5,16 @@ data class UsersResponse(
     )
 
 data class User(
-    val id : String,
+    val id: String,
     val name: String,
-    val email: String,
-    val password: String,
-    val gender: String,
     val age: Int,
+    val gender: String,
+    val bmr: Double,
     val height: Double,
     val weight: Double,
-    val bmr: Double,
     val token: String
-    )
+
+) {
+    constructor(id: String, name: String, age: Int, gender: String, bmr: Double, height: Double, weight: Double, password: String, token :String)
+            : this(id, name,  age, gender, bmr, height, weight,token)
+}
