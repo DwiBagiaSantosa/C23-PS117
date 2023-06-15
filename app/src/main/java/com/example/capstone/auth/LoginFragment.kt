@@ -125,6 +125,7 @@ class LoginFragment : Fragment() {
                 putInt("age", loggedInUser.age)
                 putString("gender", loggedInUser.gender)
                 putFloat("bmr", loggedInUser.bmr.toFloat())
+                putFloat("calories", loggedInUser.calories.toFloat())
                 putFloat("height", loggedInUser.height.toFloat())
                 putFloat("weight", loggedInUser.weight.toFloat())
                 apply()
