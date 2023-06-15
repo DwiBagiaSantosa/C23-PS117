@@ -70,6 +70,7 @@ class ClassificationFragment : Fragment() {
         imageView = binding.imageView
 
 
+
         cameraButton.setOnClickListener {
             if (ContextCompat.checkSelfPermission(
                     requireContext(),
@@ -92,9 +93,17 @@ class ClassificationFragment : Fragment() {
         }
 
         submitButton.setOnClickListener {
-            val calories = caloriesTextView.text.toString().toDouble()
-            updateBMR(calories, requireContext())
+            val caloriesText = caloriesTextView.text.toString()
+            val result = resultTextView.text.toString()
+
+            if (caloriesText.isEmpty() || result.isEmpty()) {
+                Toast.makeText(requireContext(), "Harap lakukan klasifikasi terlebih dahulu", Toast.LENGTH_SHORT).show()
+            } else {
+                val calories = caloriesText.toDouble()
+                updateBMR(calories, requireContext())
+            }
         }
+
 
     }
 
@@ -106,6 +115,7 @@ class ClassificationFragment : Fragment() {
         val loggedInUser = Preference.getLoggedInUser(requireContext())
 
         val newBMR = loggedInUser.bmr - calories
+        val newCalories = loggedInUser.calories + calories
 
         val updatedUser = User(
             id = loggedInUser.id,
@@ -116,6 +126,7 @@ class ClassificationFragment : Fragment() {
             bmr = newBMR,
             height = loggedInUser.height,
             weight = loggedInUser.weight,
+            calories = newCalories,
             token = loggedInUser.token
         )
 
@@ -123,7 +134,7 @@ class ClassificationFragment : Fragment() {
 
         CoroutineScope(Dispatchers.Main).launch {
             try {
-                val response = apiService.updateBMR(updatedUser.id, newBMR)
+                val response = apiService.updateBMR(updatedUser.id, newBMR,newCalories)
                 if (!response.error) {
 
                     Toast.makeText(requireContext(), "BMR updated successfully", Toast.LENGTH_SHORT).show()
@@ -137,7 +148,7 @@ class ClassificationFragment : Fragment() {
             }
         }
 
-        Preference.updateBMR(newBMR, requireContext())
+        Preference.updateBMR(newBMR, requireContext(),newCalories)
         Preference.saveToken(updatedUser.token, requireContext())
 
     }

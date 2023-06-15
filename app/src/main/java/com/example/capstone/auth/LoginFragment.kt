@@ -90,6 +90,7 @@ class LoginFragment : Fragment() {
                     age = loginResponse.loginResult.age,
                     gender = loginResponse.loginResult.gender,
                     bmr = loginResponse.loginResult.bmr,
+                    calories = loginResponse.loginResult.calories.toDouble(),
                     height = loginResponse.loginResult.height.toDouble(),
                     weight = loginResponse.loginResult.weight.toDouble(),
                     id = loginResponse.loginResult.userId,

@@ -13,9 +13,10 @@ data class User(
     val bmr: Double,
     val height: Double,
     val weight: Double,
+    val calories: Double,
     val token: String
 ) {
-    constructor(id: String, name: String, email:String, age: Int, gender: String, bmr: Double, height: Double, weight: Double, password: String, token: String)
-            : this(id, name, email, age, gender, bmr, height, weight, token)
+    constructor(id: String, name: String, email:String, age: Int, gender: String, bmr: Double, calories: Double, height: Double, weight: Double, password: String, token: String)
+            : this(id, name, email, age, gender, bmr, height, calories, weight, token)
 }
 

@@ -59,7 +59,7 @@ class HomeFragment : Fragment() {
             val loggedInUser = Preference.getLoggedInUser(requireContext())
             yourBMRText.text = loggedInUser.bmr.toString()
             edBasicTarget.text = "Basic Target \n" + loggedInUser.bmr.toString()
-
+            totalFood.text = "Food \n" + loggedInUser.calories.toString()
             showLoading(false)
         }, 1000)
     }

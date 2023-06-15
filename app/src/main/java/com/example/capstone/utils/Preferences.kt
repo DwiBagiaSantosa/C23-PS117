@@ -41,15 +41,17 @@ object Preference {
             gender = sharedPref.getString("gender", "")!!,
             bmr = sharedPref.getFloat("bmr", 0f).toDouble(),
 
+            calories = sharedPref.getFloat("calories", 0f).toDouble(),
             height = sharedPref.getFloat("height", 0f).toDouble(),
             weight = sharedPref.getFloat("weight", 0f).toDouble(),
             token = sharedPref.getString("token", "")!!
         )
     }
 
-    fun updateBMR(bmr: Double, context: Context) {
+    fun updateBMR(bmr: Double, context: Context, calories: Double) {
         val editor = editorPreference(context, PREF_NAME)
         editor.putFloat("bmr", bmr.toFloat())
+        editor.putFloat("calories", calories.toFloat())
         editor.apply()
     }
 
