@@ -38,11 +38,7 @@ const options = {
       },
     ],
   },
-  apis: [
-    "./controller/*.js",
-    "./regist/controller/*.js",
-    "./users/controlller/*.js",
-  ],
+  apis: ["./router/*.js", "../regist/routes/*.js", "../users/routes/*.js"],
 };
 
 const spacs = swaggerjsdoc(options);

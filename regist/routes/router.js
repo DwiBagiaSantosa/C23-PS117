@@ -1,11 +1,11 @@
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 
 const jwtSecret = crypto.randomBytes(32).toString("hex");
-const { Router } = require('express');
+const { Router } = require("express");
 
-const User = require('../models/users');
+const User = require("../models/users");
 const router = Router();
 
 router.get("/users", async (req, res) => {
@@ -22,8 +22,8 @@ router.post("/register", async (req, res) => {
 
   try {
     const existingUser = await User.findOne({
-        where: { email: email },
-      });
+      where: { email: email },
+    });
     if (existingUser) {
       return res
         .status(400)
@@ -73,8 +73,8 @@ router.post("/login", async (req, res) => {
 
   try {
     const user = await User.findOne({
-        where: { email: email },
-      });
+      where: { email: email },
+    });
 
     if (!user) {
       return res.status(400).json({ error: true, message: "User not found" });
@@ -96,7 +96,7 @@ router.post("/login", async (req, res) => {
       tall: user.tall,
       weight: user.weight,
       bmr: user.bmr,
-    //   token: jwt.sign({ userId: user._id }, jwtSecret), 
+      //   token: jwt.sign({ userId: user._id }, jwtSecret),
     };
 
     res.json({ error: false, message: "success", loginResult });
@@ -106,3 +106,176 @@ router.post("/login", async (req, res) => {
 });
 
 module.exports = router;
+
+/**
+ * @swagger
+ * tags:
+ *   name: Authentication
+ *   description: Authentication endpoints
+ */
+
+/**
+ * @swagger
+ * /users:
+ *   get:
+ *     summary: Get all users
+ *     tags: [Authentication]
+ *     responses:
+ *       200:
+ *         description: Returns all users
+ *   post:
+ *     summary: Create a new user
+ *     tags: [Authentication]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             properties:
+ *               name:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *               gender:
+ *                 type: string
+ *               age:
+ *                 type: number
+ *               tall:
+ *                 type: number
+ *               weight:
+ *                 type: number
+ *             example:
+ *               name: John Doe
+ *               email: johndoe@example.com
+ *               password: password123
+ *               gender: male
+ *               age: 30
+ *               tall: 180
+ *               weight: 75
+ *     responses:
+ *       200:
+ *         description: User created successfully
+ *       400:
+ *         description: Email already exists or invalid password
+ *       500:
+ *         description: Server error
+ */
+
+/**
+ * @swagger
+ * /login:
+ *   post:
+ *     summary: User login
+ *     tags: [Authentication]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             properties:
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *             example:
+ *               email: johndoe@example.com
+ *               password: password123
+ *     responses:
+ *       200:
+ *         description: User logged in successfully
+ *       400:
+ *         description: User not found or incorrect password
+ *       500:
+ *         description: Server error
+ */
+
+/**
+ * @swagger
+ * /users:
+ *   get:
+ *     summary: Get all users
+ *     tags: [Authentication]
+ *     responses:
+ *       200:
+ *         description: Returns all users
+ */
+
+/**
+ * @swagger
+ * /register:
+ *   post:
+ *     summary: Create a new user
+ *     tags: [Authentication]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             properties:
+ *               name:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *               gender:
+ *                 type: string
+ *               age:
+ *                 type: number
+ *               tall:
+ *                 type: number
+ *               weight:
+ *                 type: number
+ *             example:
+ *               name: John Doe
+ *               email: johndoe@example.com
+ *               password: password123
+ *               gender: male
+ *               age: 30
+ *               tall: 180
+ *               weight: 75
+ *     responses:
+ *       200:
+ *         description: User created successfully
+ *       400:
+ *         description: Email already exists or invalid password
+ *       500:
+ *         description: Server error
+ */
+
+/**
+ * @swagger
+ * /login:
+ *   post:
+ *     summary: User login
+ *     tags: [Authentication]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             properties:
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *             example:
+ *               email: johndoe@example.com
+ *               password: password123
+ *     responses:
+ *       200:
+ *         description: User logged in successfully
+ *       400:
+ *         description: User not found or incorrect password
+ *       500:
+ *         description: Server error
+ */
+
+/**
+ * Calculate BMR based on gender, age, tall, and weight
+ * @param {string} gender - User's gender ('L' for male, 'P' for female)
+ * @param {number} age - User's age
+ * @param {number} tall - User
+ */
