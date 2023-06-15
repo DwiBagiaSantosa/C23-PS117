@@ -18,7 +18,7 @@ router.get("/users", async (req, res) => {
 });
 
 router.post("/register", async (req, res) => {
-  const { name, email, password, gender, age, tall, weight } = req.body;
+  const { name, email, password, gender, age, height, weight } = req.body;
 
   try {
     const existingUser = await User.findOne({
@@ -37,7 +37,7 @@ router.post("/register", async (req, res) => {
       });
     }
 
-    const bmr = calculateBMR(gender, age, tall, weight);
+    const bmr = calculateBMR(gender, age, height, weight);
 
     const newUser = User.build({
       name,
@@ -45,7 +45,7 @@ router.post("/register", async (req, res) => {
       password,
       gender,
       age,
-      tall,
+      height,
       weight,
       bmr,
     });
@@ -58,12 +58,12 @@ router.post("/register", async (req, res) => {
   }
 });
 
-function calculateBMR(gender, age, tall, weight) {
+function calculateBMR(gender, age, height, weight) {
   let bmr = 0;
   if (gender === "L") {
-    bmr = 10 * weight + 6.25 * tall - 5 * age + 5;
+    bmr = 10 * weight + 6.25 * height - 5 * age + 5;
   } else if (gender === "P") {
-    bmr = 10 * weight + 6.25 * tall - 5 * age - 161;
+    bmr = 10 * weight + 6.25 * height - 5 * age - 161;
   }
   return bmr;
 }
@@ -93,13 +93,38 @@ router.post("/login", async (req, res) => {
       password: user.password,
       gender: user.gender,
       age: user.age,
-      tall: user.tall,
+      height: user.height,
       weight: user.weight,
       bmr: user.bmr,
     //   token: jwt.sign({ userId: user._id }, jwtSecret), 
     };
 
     res.json({ error: false, message: "success", loginResult });
+  } catch (error) {
+    res.status(500).json({ error: true, message: error });
+  }
+});
+
+router.post("/update-bmr", async (req, res) => {
+  const { userId, bmr, calories } = req.body;
+
+  try {
+    const user = await User.findOne({
+      where: { id: userId },
+    });
+
+    if (!user) {
+      return res.status(400).json({ error: true, message: "User not found" });
+    }
+
+    user.bmr = bmr;
+    user.calories = calories;
+    await user.save();
+
+    res.json({
+      error: false,
+      message: "BMR and calories updated successfully",
+    });
   } catch (error) {
     res.status(500).json({ error: true, message: error });
   }
