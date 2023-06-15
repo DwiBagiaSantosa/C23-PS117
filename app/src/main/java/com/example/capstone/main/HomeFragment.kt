@@ -57,8 +57,21 @@ class HomeFragment : Fragment() {
 
         yourBMRText.postDelayed({
             val loggedInUser = Preference.getLoggedInUser(requireContext())
+
+
+            val circleBar = binding.circleBar
+            circleBar.progress = 100
+
+            val decreaseAmount = 30
+            val currentBMR = loggedInUser.bmr
+            val newBMR = currentBMR - decreaseAmount
+
+            val maxBMR = loggedInUser.basictarget
+            val progress = ((newBMR.toDouble() / maxBMR.toDouble()) * 100).toInt()
+            circleBar.progress = progress
+
+            edBasicTarget.text = "Basic Target \n" + loggedInUser.basictarget.toString()
             yourBMRText.text = loggedInUser.bmr.toString()
-            edBasicTarget.text = "Basic Target \n" + loggedInUser.bmr.toString()
             totalFood.text = "Food \n" + loggedInUser.calories.toString()
             showLoading(false)
         }, 1000)

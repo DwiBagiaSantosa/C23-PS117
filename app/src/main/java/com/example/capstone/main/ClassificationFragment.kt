@@ -124,6 +124,7 @@ class ClassificationFragment : Fragment() {
             age = loggedInUser.age,
             gender = loggedInUser.gender,
             bmr = newBMR,
+            basictarget = loggedInUser.basictarget,
             height = loggedInUser.height,
             weight = loggedInUser.weight,
             calories = newCalories,

@@ -90,6 +90,7 @@ class LoginFragment : Fragment() {
                     age = loginResponse.loginResult.age,
                     gender = loginResponse.loginResult.gender,
                     bmr = loginResponse.loginResult.bmr,
+                    basictarget = loginResponse.loginResult.basictarget,
                     calories = loginResponse.loginResult.calories.toDouble(),
                     height = loginResponse.loginResult.height.toDouble(),
                     weight = loginResponse.loginResult.weight.toDouble(),
@@ -124,6 +125,7 @@ class LoginFragment : Fragment() {
                 putString("name", loggedInUser.name)
                 putInt("age", loggedInUser.age)
                 putString("gender", loggedInUser.gender)
+                putFloat("basictarget", loggedInUser.basictarget.toFloat())
                 putFloat("bmr", loggedInUser.bmr.toFloat())
                 putFloat("calories", loggedInUser.calories.toFloat())
                 putFloat("height", loggedInUser.height.toFloat())

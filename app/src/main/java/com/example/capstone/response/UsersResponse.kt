@@ -10,13 +10,27 @@ data class User(
     val email : String,
     val age: Int,
     val gender: String,
-    val bmr: Double,
     val height: Double,
     val weight: Double,
+    val basictarget: Double,
+    val bmr: Double,
     val calories: Double,
     val token: String
 ) {
-    constructor(id: String, name: String, email:String, age: Int, gender: String, bmr: Double, calories: Double, height: Double, weight: Double, password: String, token: String)
-            : this(id, name, email, age, gender, bmr, height, calories, weight, token)
+    constructor(
+        id: String,
+        name: String,
+        email:String,
+        age: Int,
+        gender: String,
+        height: Double,
+        weight: Double,
+        basictarget: Double,
+        bmr: Double,
+        calories: Double,
+        password: String,
+        token: String
+    )
+            :this(id, name, email, age, gender, bmr, basictarget, height, calories, weight, token)
 }
 

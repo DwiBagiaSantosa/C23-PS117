@@ -21,6 +21,8 @@ data class LoginResult(
     val weight: Int,
     @SerializedName("bmr")
     val bmr: Double,
+    @SerializedName("basictarget")
+    val basictarget: Double,
     @SerializedName("calories")
     val calories: Double,
     @SerializedName("token")

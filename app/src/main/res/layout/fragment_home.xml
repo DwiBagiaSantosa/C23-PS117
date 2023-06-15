@@ -89,12 +89,19 @@
 
 
 
-            <ImageView
+            <ProgressBar
+                android:id="@+id/circleBar"
+                style="?android:attr/progressBarStyleHorizontal"
                 android:layout_width="110dp"
                 android:layout_height="110dp"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/circlebackground"
-                android:scaleType="centerCrop" />
+                android:layout_gravity="center"
+                android:max="100"
+                android:progress="100"
+                android:progressDrawable="@drawable/circular_progress_bar"
+                android:secondaryProgress="100"
+                android:indeterminate="false"
+                android:indeterminateDrawable="@drawable/circular_progress_bar" />
+
 
             <TextView
                 android:id="@+id/your_bmr_text"
