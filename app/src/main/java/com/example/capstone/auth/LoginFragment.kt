@@ -80,7 +80,8 @@ class LoginFragment : Fragment() {
         when (result) {
             is Result.Loading -> {
                 showLoading(true)
-                binding.textView6.text = "Sedang Login..."
+                Toast.makeText(requireContext(), "Loading...", Toast.LENGTH_SHORT).show()
+
             }
             is Result.Success -> {
                 val loginResponse = result.data
@@ -104,6 +105,7 @@ class LoginFragment : Fragment() {
             is Result.Error -> {
                 showLoading(false)
                 Toast.makeText(requireContext(), result.error, Toast.LENGTH_LONG).show()
+
             }
         }
     }
@@ -153,6 +155,7 @@ class LoginFragment : Fragment() {
     private fun showLoading(state: Boolean) {
         binding.apply {
             progressBar.isVisible = state
+            textView6.isVisible = !state
             edLoginEmail.isVisible = !state
             edLoginPassword.isVisible = !state
             btLogin.isVisible = !state

@@ -17,6 +17,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 
 import com.example.capstone.classification.Classifier
@@ -135,17 +136,17 @@ class ClassificationFragment : Fragment() {
 
         CoroutineScope(Dispatchers.Main).launch {
             try {
-                val response = apiService.updateBMR(updatedUser.id, newBMR,newCalories)
+                showLoading(true)
+                val response = apiService.updateBMR(updatedUser.id, newBMR, newCalories)
                 if (!response.error) {
-
                     Toast.makeText(requireContext(), "BMR updated successfully", Toast.LENGTH_SHORT).show()
                 } else {
-
                     Toast.makeText(requireContext(), "Failed to update BMR", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
-
                 Toast.makeText(requireContext(), "Error updating BMR: ${e.message}", Toast.LENGTH_SHORT).show()
+            } finally {
+                showLoading(false)
             }
         }
 
@@ -182,6 +183,16 @@ class ClassificationFragment : Fragment() {
             resultTextView.text = result[0].title
             confidenceTextView.text = result[0].confidence.toString()
             caloriesTextView.text = result[0].calories.toString()
+        }
+    }
+
+    private fun showLoading(state: Boolean) {
+        binding.apply {
+
+            progressBar.isVisible = state
+            btnSubmit.isVisible = !state
+
+
         }
     }
 

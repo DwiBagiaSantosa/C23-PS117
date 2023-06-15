@@ -88,6 +88,7 @@ class HomeFragment : Fragment() {
             yourBMRText.isVisible = !state
             edBasicTarget.isVisible = !state
             totalFood.isVisible = !state
+            circleBar.isVisible = !state
         }
     }
 }

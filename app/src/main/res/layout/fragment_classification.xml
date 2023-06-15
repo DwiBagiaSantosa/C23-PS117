@@ -17,10 +17,12 @@
         app:cardCornerRadius="16dp"
         app:cardElevation="4dp">
 
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="16dp">
+
 
             <TextView
                 android:id="@+id/title"
@@ -120,11 +122,14 @@
 
 
 
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/calories"
                 android:orientation="horizontal">
+
 
                 <Button
                     android:id="@+id/btn_camera"
@@ -137,6 +142,8 @@
                     android:text="Add Photo"
                     android:textSize="15sp"
                     android:textStyle="bold" />
+
+
 
                 <Button
                     android:id="@+id/btn_gallery"
@@ -161,14 +168,30 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="60dp"
                 android:layout_marginBottom="80dp"
-                android:text="Submit"
+                android:text="Add Food"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/imageView"
+                android:layout_alignEnd="@+id/imageView"
+                android:layout_alignBottom="@+id/imageView"
+                android:layout_marginStart="36dp"
+                android:layout_marginTop="-600dp"
+                android:layout_marginEnd="35dp"
+                android:layout_marginBottom="-94dp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
         </RelativeLayout>
-
 
 
     </androidx.cardview.widget.CardView>

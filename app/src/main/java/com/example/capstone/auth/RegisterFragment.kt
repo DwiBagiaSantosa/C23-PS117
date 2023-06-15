@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -42,11 +43,16 @@ class RegisterFragment : Fragment() {
             Navigation.findNavController(view).navigate(R.id.loginFragment)
         }
 
+        val genderOptions = arrayOf("Gender ?", "L", "P")
+        val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, genderOptions)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.edRegisterGender.adapter = adapter
+
         binding.btRegister.setOnClickListener { it ->
             val name = binding.edRegisterName.text.toString()
             val email = binding.edRegisterEmail.text.toString()
             val password = binding.edRegisterPassword.text.toString()
-            val gender = binding.edRegisterGender.text.toString()
+            val gender = binding.edRegisterGender.selectedItem.toString()
             val age = binding.edRegisterAge.text.toString().toIntOrNull()
             val height = binding.edRegisterHeight.text.toString().toDoubleOrNull()
             val weight = binding.edRegisterWeight.text.toString().toDoubleOrNull()
@@ -59,7 +65,7 @@ class RegisterFragment : Fragment() {
                 showLoading(true)
                 register(name, email, password, gender, age!!, height!!, weight!!)
             } else {
-                Toast.makeText(requireContext(), "Isian belum valid", Toast.LENGTH_LONG).show()
+                Toast.makeText(requireContext(), "Please fill in all fields", Toast.LENGTH_LONG).show()
             }
         }
     }
@@ -82,7 +88,6 @@ class RegisterFragment : Fragment() {
         when (result) {
             is Result.Loading -> {
                 showLoading(true)
-                binding.textView2.text = "Sedang Register..."
             }
             is Result.Success -> {
                 showLoading(false)
@@ -124,6 +129,7 @@ class RegisterFragment : Fragment() {
     private fun showLoading(state: Boolean) {
         binding.apply {
             progressBar.isVisible = state
+            textView2.isVisible = !state
             edRegisterEmail.isVisible = !state
             edRegisterName.isVisible = !state
             edRegisterPassword.isVisible = !state
