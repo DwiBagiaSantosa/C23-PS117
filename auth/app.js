@@ -27,10 +27,10 @@ const options = {
   definition: {
     openapi: "3.0.0",
     info: {
-      title: "Arif Books Express API with Swagger",
+      title: "Calorie Sense API Documentation with Swagger",
       version: "0.1.0",
       description:
-        "This is a simple Book API application made with Express and documented with Swagger",
+        "This API application made with Express and documented with Swagger",
     },
     servers: [
       {
@@ -38,7 +38,11 @@ const options = {
       },
     ],
   },
-  apis: ["./controller/*.js"],
+  apis: [
+    "./controller/*.js",
+    "./regist/controller/*.js",
+    "./users/controlller/*.js",
+  ],
 };
 
 const spacs = swaggerjsdoc(options);
