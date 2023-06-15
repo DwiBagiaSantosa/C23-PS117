@@ -40,6 +40,7 @@ object Preference {
             age = sharedPref.getInt("age", 0),
             gender = sharedPref.getString("gender", "")!!,
             bmr = sharedPref.getFloat("bmr", 0f).toDouble(),
+
             height = sharedPref.getFloat("height", 0f).toDouble(),
             weight = sharedPref.getFloat("weight", 0f).toDouble(),
             token = sharedPref.getString("token", "")!!

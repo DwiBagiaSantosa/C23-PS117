@@ -70,10 +70,6 @@ class ClassificationFragment : Fragment() {
         imageView = binding.imageView
 
 
-        val loggedInUser = Preference.getLoggedInUser(requireContext())
-
-
-
         cameraButton.setOnClickListener {
             if (ContextCompat.checkSelfPermission(
                     requireContext(),

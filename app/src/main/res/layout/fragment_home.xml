@@ -11,6 +11,7 @@
     tools:context=".main.HomeFragment">
 
 
+
     <androidx.cardview.widget.CardView
         android:layout_width="310dp"
         android:layout_height="300dp"
@@ -18,6 +19,8 @@
         android:layout_marginTop="100dp"
         android:layout_marginEnd="24dp"
         app:cardCornerRadius="16dp">
+
+
 
         <TextView
             android:id="@+id/daily_cal"
@@ -85,6 +88,7 @@
             android:layout_gravity="center_horizontal">
 
 
+
             <ImageView
                 android:layout_width="110dp"
                 android:layout_height="110dp"
@@ -99,6 +103,14 @@
                 android:layout_gravity="center"
                 android:textSize="15sp"
                 android:textColor="@android:color/black" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                style="?android:attr/progressBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:progressTint="@color/yellow"
+                android:visibility="visible" />
 
 
         </FrameLayout>
@@ -136,6 +148,7 @@
 
 
     </LinearLayout>
+
 
 
 </LinearLayout>
