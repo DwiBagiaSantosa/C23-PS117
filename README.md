@@ -16,12 +16,9 @@
 - Copy images from example images to perform image classification tests 
 
 ## Screenshoot
-<img src="screenshoot/RegisterImages.png?raw=true" width="400">
-
 |Register|Login|
 |--|--|
-|<img src="screenshoot/RegisterImages.png?raw=true" width="400">
-|<img src="screenshoot/LoginImages.png?raw=true" width="400">|
+|![](screenshoot/RegisterImages.png?raw=true)|![](screenshoot/LoginImages.png?raw=true)|
 
 |Homepage|Profile|
 |--|--|
