@@ -1,7 +1,7 @@
 
 # CalorieSense
 
-This project developed for the capstone project
+This project developed for the capstone project 
 
 ## Team Profile
 
