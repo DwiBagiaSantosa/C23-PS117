@@ -36,8 +36,8 @@ class ClassificationFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val mInputSize = 224
-    private val mModelPath = "model_mnet.tflite"
-    private val mLabelPath = "label_mnet.txt"
+    private val mModelPath = "model.tflite"
+    private val mLabelPath = "labels.txt"
     private lateinit var classifier: Classifier
 
     private lateinit var cameraButton: Button
@@ -59,6 +59,7 @@ class ClassificationFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        _binding = FragmentClassificationBinding.bind(view)
 
         initClassifier()
 
@@ -137,7 +138,7 @@ class ClassificationFragment : Fragment() {
         CoroutineScope(Dispatchers.Main).launch {
             try {
                 showLoading(true)
-                val response = apiService.updateBMR(updatedUser.id, newBMR, newCalories)
+                val response = apiService.updateBMR(updatedUser.id.toInt(), newBMR, newCalories)
                 if (!response.error) {
                     Toast.makeText(requireContext(), "BMR updated successfully", Toast.LENGTH_SHORT).show()
                 } else {

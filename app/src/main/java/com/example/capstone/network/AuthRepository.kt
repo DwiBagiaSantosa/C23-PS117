@@ -42,7 +42,7 @@ class AuthRepository(private val apiService: ApiService) {
         }
     }
 
-    suspend fun updateBMR(userId: String, bmr: Double, calories: Double): Result<Unit> {
+    suspend fun updateBMR(userId: Int, bmr: Double, calories: Double): Result<Unit> {
         return try {
             apiService.updateBMR(userId, bmr,calories)
             Result.Success(Unit)

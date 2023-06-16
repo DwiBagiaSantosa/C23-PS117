@@ -32,10 +32,9 @@ class LoginFragment : Fragment() {
     }
 
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
         return binding.root
@@ -62,7 +61,8 @@ class LoginFragment : Fragment() {
                     result?.let { handleLoginResult(it) }
                 }
             } else {
-                Toast.makeText(requireContext(), "Please enter your email", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Please enter your email", Toast.LENGTH_SHORT)
+                    .show()
             }
         }
 
@@ -72,8 +72,6 @@ class LoginFragment : Fragment() {
             onBackPressed()
         }
     }
-
-
 
 
     private fun handleLoginResult(result: Result<LoginResponse>) {
@@ -139,7 +137,6 @@ class LoginFragment : Fragment() {
             requireActivity().finish()
         }
     }
-
 
 
     private fun onBackPressed() {

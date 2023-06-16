@@ -30,7 +30,18 @@ data class User(
         calories: Double,
         password: String,
         token: String
+    ) : this(
+        id,
+        name,
+        email,
+        age,
+        gender,
+        height,
+        weight,
+        bmr,
+        basictarget,
+        calories,
+        token
     )
-            :this(id, name, email, age, gender, bmr, basictarget, height, calories, weight, token)
 }
 

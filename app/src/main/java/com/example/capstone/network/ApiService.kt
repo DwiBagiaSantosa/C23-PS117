@@ -29,7 +29,7 @@ interface ApiService {
     @FormUrlEncoded
     @POST("update-bmr")
     suspend fun updateBMR(
-        @Field("userId") userId: String,
+        @Field("userId") userId: Int,
         @Field("bmr") bmr: Double,
         @Field("calories") calories: Double
 

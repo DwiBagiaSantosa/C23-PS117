@@ -34,7 +34,7 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        _binding = FragmentHomeBinding.bind(view)
         edBasicTarget = binding.edBasicTarget
         yourBMRText = binding.yourBmrText
         totalFood = binding.edFood
