@@ -1,6 +1,5 @@
 const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
-const bcrypt = require("bcrypt");
 
 const jwtSecret = crypto.randomBytes(32).toString("hex");
 const { Router } = require("express");
@@ -18,7 +17,7 @@ router.get("/users", async (req, res) => {
 });
 
 router.post("/register", async (req, res) => {
-  const { name, email, password, gender, age, tall, weight } = req.body;
+  const { name, email, password, gender, age, height, weight } = req.body;
 
   try {
     const existingUser = await User.findOne({
@@ -37,7 +36,8 @@ router.post("/register", async (req, res) => {
       });
     }
 
-    const bmr = calculateBMR(gender, age, tall, weight);
+    const bmr = calculateBMR(gender, age, height, weight);
+    const basictarget = calculateBasicTarget(gender, age, height, weight);
 
     const newUser = User.build({
       name,
@@ -45,8 +45,9 @@ router.post("/register", async (req, res) => {
       password,
       gender,
       age,
-      tall,
+      height,
       weight,
+      basictarget,
       bmr,
     });
 
@@ -58,14 +59,24 @@ router.post("/register", async (req, res) => {
   }
 });
 
-function calculateBMR(gender, age, tall, weight) {
+function calculateBMR(gender, age, height, weight) {
   let bmr = 0;
-  if (gender === "L") {
-    bmr = 10 * weight + 6.25 * tall - 5 * age + 5;
-  } else if (gender === "P") {
-    bmr = 10 * weight + 6.25 * tall - 5 * age - 161;
+  if (gender.toUpperCase() === "L") {
+    bmr = 10 * weight + 6.25 * height - 5 * age + 5;
+  } else if (gender.toUpperCase() === "P") {
+    bmr = 10 * weight + 6.25 * height - 5 * age - 161;
   }
   return bmr;
+}
+
+function calculateBasicTarget(gender, age, height, weight) {
+  let basictarget = 0;
+  if (gender.toUpperCase() === "L") {
+    basictarget = 10 * weight + 6.25 * height - 5 * age + 5;
+  } else if (gender.toUpperCase() === "P") {
+    basictarget = 10 * weight + 6.25 * height - 5 * age - 161;
+  }
+  return basictarget;
 }
 
 router.post("/login", async (req, res) => {
@@ -93,13 +104,39 @@ router.post("/login", async (req, res) => {
       password: user.password,
       gender: user.gender,
       age: user.age,
-      tall: user.tall,
+      height: user.height,
       weight: user.weight,
+      basictarget: user.basictarget,
       bmr: user.bmr,
-      //   token: jwt.sign({ userId: user._id }, jwtSecret),
+      token: jwt.sign({ userId: user.id }, jwtSecret),
     };
 
     res.json({ error: false, message: "success", loginResult });
+  } catch (error) {
+    res.status(500).json({ error: true, message: error });
+  }
+});
+
+router.post("/update-bmr", async (req, res) => {
+  const { userId, bmr, calories } = req.body;
+
+  try {
+    const user = await await User.findOne({
+      where: { id: userId },
+    });
+
+    if (!user) {
+      return res.status(400).json({ error: true, message: "User not found" });
+    }
+
+    user.bmr = bmr;
+    user.calories = calories;
+    await user.save();
+
+    res.json({
+      error: false,
+      message: "BMR and calories updated successfully",
+    });
   } catch (error) {
     res.status(500).json({ error: true, message: error });
   }

@@ -29,7 +29,7 @@ const User = sequelize.define('users', {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  tall: {
+  height: {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
@@ -37,9 +37,18 @@ const User = sequelize.define('users', {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
+  basictarget: {
+    type: DataTypes.INTEGER,
+  },
   bmr: {
     type: DataTypes.INTEGER,
     allowNull: false,
+  },
+  calories: {
+    type: DataTypes.INTEGER,
+  },
+  token: {
+    type: DataTypes.STRING,
   },
 }, {
     timestamps: false // Disable the default createdAt and updatedAt columns
