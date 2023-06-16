@@ -20,9 +20,8 @@
 
 |Register|Login|
 |--|--|
-|![](<img src="screenshoot/RegisterImages.png?raw=true" width="400">
-)|![](<img src="screenshoot/LoginImages.png?raw=true" width="400">
-)|
+|<img src="screenshoot/RegisterImages.png?raw=true" width="400">
+|(<img src="screenshoot/LoginImages.png?raw=true" width="400">|
 
 |Homepage|Profile|
 |--|--|
