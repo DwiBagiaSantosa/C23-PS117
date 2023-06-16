@@ -79,43 +79,87 @@ function calculateBasicTarget(gender, age, height, weight) {
   return basictarget;
 }
 
+// router.post("/login", async (req, res) => {
+//   const { email, password } = req.body;
+
+//   try {
+//     const user = await User.findOne({
+//       where: { email: email },
+//     });
+
+//     if (!user) {
+//       return res.status(400).json({ error: true, message: "User not found" });
+//     }
+
+//     if (user.password !== password) {
+//       return res
+//         .status(400)
+//         .json({ error: true, message: "Incorrect password" });
+//     }
+
+//     const loginResult = {
+//       userId: user.id,
+//       name: user.name,
+//       email: user.email,
+//       password: user.password,
+//       gender: user.gender,
+//       age: user.age,
+//       height: user.height,
+//       weight: user.weight,
+//       basictarget: user.basictarget,
+//       bmr: user.bmr,
+//       token: jwt.sign({ userId: user.id }, jwtSecret),
+//     };
+
+//     res.json({ error: false, message: "success", loginResult });
+//   } catch (error) {
+//     res.status(500).json({ error: true, message: error });
+//   }
+// });
+
 router.post("/login", async (req, res) => {
-  const { email, password } = req.body;
-
-  try {
-    const user = await User.findOne({
-      where: { email: email },
-    });
-
-    if (!user) {
-      return res.status(400).json({ error: true, message: "User not found" });
+    const { email, password } = req.body;
+  
+    try {
+      const user = await User.findOne({
+            where: { email: email },
+        });
+  
+      if (!user) {
+        return res.status(400).json({ error: true, message: "User not found" });
+      }
+  
+      if (user.password !== password) {
+        return res
+          .status(400)
+          .json({ error: true, message: "Incorrect password" });
+      }
+  
+      const token = jwt.sign({ userId: user.id }, jwtSecret);
+  
+      user.token = token;
+      await user.save();
+  
+      const loginResult = {
+        userId: user.id,
+        name: user.name,
+        email: user.email,
+        password: user.password,
+        gender: user.gender,
+        age: user.age,
+        height: user.height,
+        weight: user.weight,
+        basictarget: user.basictarget,
+        bmr: user.bmr,
+        calories: user.calories,
+        token: jwt.sign({ userId: user.id }, jwtSecret),
+      };
+  
+      res.json({ error: false, message: "success", loginResult });
+    } catch (error) {
+      res.status(500).json({ error: true, message: "Server error" });
     }
-
-    if (user.password !== password) {
-      return res
-        .status(400)
-        .json({ error: true, message: "Incorrect password" });
-    }
-
-    const loginResult = {
-      userId: user.id,
-      name: user.name,
-      email: user.email,
-      password: user.password,
-      gender: user.gender,
-      age: user.age,
-      height: user.height,
-      weight: user.weight,
-      basictarget: user.basictarget,
-      bmr: user.bmr,
-      token: jwt.sign({ userId: user.id }, jwtSecret),
-    };
-
-    res.json({ error: false, message: "success", loginResult });
-  } catch (error) {
-    res.status(500).json({ error: true, message: error });
-  }
-});
+  });
 
 router.post("/update-bmr", async (req, res) => {
   const { userId, bmr, calories } = req.body;
@@ -148,7 +192,7 @@ module.exports = router;
  * @swagger
  * tags:
  *   name: Authentication
- *   description: API endpoints for managing user data
+ *   description: Authentication endpoints
  */
 
 /**
@@ -159,50 +203,45 @@ module.exports = router;
  *     tags: [Authentication]
  *     responses:
  *       200:
- *         description: Success
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/UsersResponse'
- *       500:
- *         description: Failed to get users
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/ErrorResponse'
- */
-
-/**
- * @swagger
- * /register:
+ *         description: Returns all users
  *   post:
- *     summary: Register a new user
+ *     summary: Create a new user
  *     tags: [Authentication]
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/RegisterRequest'
+ *             properties:
+ *               name:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *               gender:
+ *                 type: string
+ *               age:
+ *                 type: number
+ *               tall:
+ *                 type: number
+ *               weight:
+ *                 type: number
+ *             example:
+ *               name: John Doe
+ *               email: johndoe@example.com
+ *               password: password123
+ *               gender: male
+ *               age: 30
+ *               tall: 180
+ *               weight: 75
  *     responses:
  *       200:
- *         description: Success
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/SuccessResponse'
+ *         description: User created successfully
  *       400:
- *         description: Bad Request
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/ErrorResponse'
+ *         description: Email already exists or invalid password
  *       500:
- *         description: Failed to register user
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/ErrorResponse'
+ *         description: Server error
  */
 
 /**
@@ -216,178 +255,21 @@ module.exports = router;
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/LoginRequest'
+ *             properties:
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *             example:
+ *               email: johndoe@example.com
+ *               password: password123
  *     responses:
  *       200:
- *         description: Success
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/LoginResponse'
+ *         description: User logged in successfully
  *       400:
- *         description: Bad Request
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/ErrorResponse'
+ *         description: User not found or incorrect password
  *       500:
- *         description: Failed to login user
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/ErrorResponse'
- */
-
-/**
- * @swagger
- * /update-bmr:
- *   post:
- *     summary: Update user BMR and calories
- *     tags: [Authentication]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/UpdateBMRRequest'
- *     responses:
- *       200:
- *         description: Success
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/SuccessResponse'
- *       400:
- *         description: Bad Request
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/ErrorResponse'
- *       500:
- *         description: Failed to update BMR and calories
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/ErrorResponse'
- */
-
-/**
- * @swagger
- * components:
- *   schemas:
- *     UsersResponse:
- *       type: object
- *       properties:
- *         users:
- *           type: array
- *           items:
- *             $ref: '#/components/schemas/User'
- *       example:
- *         users:
- *           - name: John Doe
- *             email: john@example.com
- *             gender: M
- *             age: 30
- *           - name: Jane Smith
- *             email: jane@example.com
- *             gender: F
- *             age: 25
- *     User:
- *       type: object
- *       properties:
- *         name:
- *           type: string
- *         email:
- *           type: string
- *         gender:
- *           type: string
- *         age:
- *           type: integer
- *     RegisterRequest:
- *       type: object
- *       properties:
- *         name:
- *           type: string
- *         email:
- *           type: string
- *         password:
- *           type: string
- *         gender:
- *           type: string
- *         age:
- *           type: integer
- *         height:
- *           type: number
- *         weight:
- *           type: number
- *       example:
- *         name: John Doe
- *         email: john@example.com
- *         password: password123
- *         gender: M
- *         age: 30
- *         height: 180
- *         weight: 75
- *     LoginRequest:
- *       type: object
- *       properties:
- *         email:
- *           type: string
- *         password:
- *           type: string
- *       example:
- *         email: john@example.com
- *         password: password123
- *     LoginResponse:
- *       type: object
- *       properties:
- *         error:
- *           type: boolean
- *         message:
- *           type: string
- *         loginResult:
- *           $ref: '#/components/schemas/User'
- *       example:
- *         error: false
- *         message: success
- *         loginResult:
- *           name: John Doe
- *           email: john@example.com
- *           gender: M
- *           age: 30
- *     UpdateBMRRequest:
- *       type: object
- *       properties:
- *         userId:
- *           type: string
- *         bmr:
- *           type: number
- *         calories:
- *           type: number
- *       example:
- *         userId: "123456"
- *         bmr: 1800
- *         calories: 2000
- *     SuccessResponse:
- *       type: object
- *       properties:
- *         error:
- *           type: boolean
- *         message:
- *           type: string
- *       example:
- *         error: false
- *         message: User Created
- *     ErrorResponse:
- *       type: object
- *       properties:
- *         error:
- *           type: boolean
- *         message:
- *           type: string
- *       example:
- *         error: true
- *         message: Internal server error
+ *         description: Server error
  */
 
 /**
@@ -398,50 +280,50 @@ module.exports = router;
  *     tags: [Authentication]
  *     responses:
  *       200:
- *         description: Success
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/UsersResponse'
- *       500:
- *         description: Failed to get users
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/ErrorResponse'
+ *         description: Returns all users
  */
 
 /**
  * @swagger
  * /register:
  *   post:
- *     summary: Register a new user
+ *     summary: Create a new user
  *     tags: [Authentication]
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/RegisterRequest'
+ *             properties:
+ *               name:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *               gender:
+ *                 type: string
+ *               age:
+ *                 type: number
+ *               tall:
+ *                 type: number
+ *               weight:
+ *                 type: number
+ *             example:
+ *               name: John Doe
+ *               email: johndoe@example.com
+ *               password: password123
+ *               gender: male
+ *               age: 30
+ *               tall: 180
+ *               weight: 75
  *     responses:
  *       200:
- *         description: Success
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/SuccessResponse'
+ *         description: User created successfully
  *       400:
- *         description: Bad Request
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/ErrorResponse'
+ *         description: Email already exists or invalid password
  *       500:
- *         description: Failed to register user
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/ErrorResponse'
+ *         description: Server error
  */
 
 /**
@@ -455,57 +337,26 @@ module.exports = router;
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/LoginRequest'
+ *             properties:
+ *               email:
+ *                 type: string
+ *               password:
+ *                 type: string
+ *             example:
+ *               email: johndoe@example.com
+ *               password: password123
  *     responses:
  *       200:
- *         description: Success
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/LoginResponse'
+ *         description: User logged in successfully
  *       400:
- *         description: Bad Request
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/ErrorResponse'
+ *         description: User not found or incorrect password
  *       500:
- *         description: Failed to login user
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/ErrorResponse'
+ *         description: Server error
  */
 
 /**
- * @swagger
- * /update-bmr:
- *   post:
- *     summary: Update user BMR and calories
- *     tags: [Authentication]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/UpdateBMRRequest'
- *     responses:
- *       200:
- *         description: Success
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/SuccessResponse'
- *       400:
- *         description: Bad Request
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/ErrorResponse'
- *       500:
- *         description: Failed to update BMR and calories
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/ErrorResponse'
+ * Calculate BMR based on gender, age, tall, and weight
+ * @param {string} gender - User's gender ('L' for male, 'P' for female)
+ * @param {number} age - User's age
+ * @param {number} tall - User
  */
