@@ -1,4 +1,3 @@
-
 # CalorieSense
 
 This project developed for the capstone project 
