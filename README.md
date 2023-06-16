@@ -9,22 +9,32 @@
 
 ## Table of Contents
 - [Installation](#installation)
-- [Screenshot](#screenshot)
+- [Screenshoot](#screenshoot)
 
 ## Installation
 - Clone this repository
 - copy images from example images to perform image classification tests 
 
-## Screenshot
-|Register|Login|Homepage|
-|--|--|--|
-|![](screenshoot/RegisterImages.png?raw=true)|![](screenshoot/LoginImages.png?raw=true)|![](screenshoot/HomepageImages.png?raw=true)|
+## Screenshots
 
-|Profile|Classification|ClassificationUpdate|
-|--|--|--|
-|![](screenshoot/RegisterImages.png?raw=true)|![](screenshoot/ClassificationImages.png?raw=true)|![](screenshoot/ClassificationImagesUpdate.png?raw=true)|
+### Register
+![Register](screenshoot/RegisterImages.png)
 
+### Login
+![Login](screenshoot/LoginImages.png)
 
-|Homepage Updates|
-|--|
-|![](screenshoot/HomepageImagesUpdate.png?raw=true)
+### Homepage
+![Homepage](screenshoot/HomepageImages.png)
+
+### Profile
+![Profile](screenshoot/ProfileImages.png)
+
+### Classification
+![Classification](screenshoot/ClassificationImages.png)
+
+### Classification Update
+![Classification Update](screenshoot/ClassificationImagesUpdate.png)
+
+### Homepage Update
+![Homepage Update](screenshoot/HomepageImagesUpdate.png)
+
