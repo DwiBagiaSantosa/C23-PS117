@@ -53,7 +53,7 @@ class ProfileFragment : Fragment() {
         tvAge.text = loggedInUser.age.toString()
         tvHeight.text = loggedInUser.height.toString()
         tvWeight.text = loggedInUser.weight.toString()
-        tvBMR.text = loggedInUser.bmr.toString()
+        tvBMR.text = loggedInUser.basictarget.toString()
 
     }
 

@@ -18,6 +18,7 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
+
     private lateinit var edBasicTarget: TextView
     private lateinit var totalFood: TextView
     private lateinit var yourBMRText: TextView
@@ -35,6 +36,7 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentHomeBinding.bind(view)
+
         edBasicTarget = binding.edBasicTarget
         yourBMRText = binding.yourBmrText
         totalFood = binding.edFood
@@ -82,6 +84,7 @@ class HomeFragment : Fragment() {
         _binding = null
     }
 
+
     private fun showLoading(state: Boolean) {
         binding.apply {
             progressBar.isVisible = state
@@ -89,6 +92,8 @@ class HomeFragment : Fragment() {
             edBasicTarget.isVisible = !state
             totalFood.isVisible = !state
             circleBar.isVisible = !state
+            btClassif.isVisible = !state
+            btProfile.isVisible = !state
         }
     }
 }

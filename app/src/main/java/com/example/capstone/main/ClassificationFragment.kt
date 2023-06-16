@@ -99,7 +99,7 @@ class ClassificationFragment : Fragment() {
             val result = resultTextView.text.toString()
 
             if (caloriesText.isEmpty() || result.isEmpty()) {
-                Toast.makeText(requireContext(), "Harap lakukan klasifikasi terlebih dahulu", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Please do the classification first", Toast.LENGTH_SHORT).show()
             } else {
                 val calories = caloriesText.toDouble()
                 updateBMR(calories, requireContext())
