@@ -15,26 +15,20 @@
 - Clone this repository
 - copy images from example images to perform image classification tests 
 
-## Screenshots
+## Screenshoot
+|Register|Login|
+|--|--|
+|![](screenshoot/RegisterImages.png?raw=true)|![](screenshoot/LoginImages.png?raw=true)|
 
-### Register
-![Register](screenshoot/RegisterImages.png)
+|Homepage|Profile|
+|--|--|
+|![](screenshoot/HomepageImages.png?raw=true)|![](screenshoot/ProfileImages.png?raw=true)|
 
-### Login
-![Login](screenshoot/LoginImages.png)
+|Classification|ClassificationUpdate|
+|--|--|
+![](screenshoot/ClassificationImages.png?raw=true)|![](screenshoot/ClassificationImagesUpdate.png?raw=true)|
 
-### Homepage
-![Homepage](screenshoot/HomepageImages.png)
 
-### Profile
-![Profile](screenshoot/ProfileImages.png)
-
-### Classification
-![Classification](screenshoot/ClassificationImages.png)
-
-### Classification Update
-![Classification Update](screenshoot/ClassificationImagesUpdate.png)
-
-### Homepage Update
-![Homepage Update](screenshoot/HomepageImagesUpdate.png)
-
+|Homepage Updates|
+|--|
+|![](screenshoot/HomepageImagesUpdate.png?raw=true)|
