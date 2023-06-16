@@ -18,7 +18,7 @@
 ## Screenshoot
 |Register|Login|
 |--|--|
-|![](screenshoot/RegisterImages.png?raw=true)|![](screenshoot/LoginImages.png?raw=true)|
+|![](screenshoot/RegisterImages.png?raw=true | width=300 )|![](screenshoot/LoginImages.png?raw=true | width=300)|
 
 |Homepage|Profile|
 |--|--|
