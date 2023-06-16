@@ -12,7 +12,7 @@ module.exports = router;
 /**
  * @swagger
  * tags:
- *   name: User
+ *   name: Users
  *   description: API endpoints for managing user calorie data
  */
 
@@ -21,7 +21,7 @@ module.exports = router;
  * /users/{id}:
  *   get:
  *     summary: Get user calorie data
- *     tags: [User]
+ *     tags: [Users]
  *     parameters:
  *       - in: path
  *         name: id
@@ -55,7 +55,7 @@ module.exports = router;
  * /users/{id}:
  *   post:
  *     summary: Add user calorie data
- *     tags: [User]
+ *     tags: [Users]
  *     parameters:
  *       - in: path
  *         name: id
@@ -100,7 +100,7 @@ module.exports = router;
  * /users/{id}:
  *   put:
  *     summary: Update user calorie data
- *     tags: [User]
+ *     tags: [Users]
  *     parameters:
  *       - in: path
  *         name: id

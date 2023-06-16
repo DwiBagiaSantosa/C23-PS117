@@ -148,7 +148,7 @@ module.exports = router;
  * @swagger
  * tags:
  *   name: Authentication
- *   description: Authentication endpoints
+ *   description: API endpoints for managing user data
  */
 
 /**
@@ -159,127 +159,50 @@ module.exports = router;
  *     tags: [Authentication]
  *     responses:
  *       200:
- *         description: Returns all users
- *   post:
- *     summary: Create a new user
- *     tags: [Authentication]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             properties:
- *               name:
- *                 type: string
- *               email:
- *                 type: string
- *               password:
- *                 type: string
- *               gender:
- *                 type: string
- *               age:
- *                 type: number
- *               tall:
- *                 type: number
- *               weight:
- *                 type: number
- *             example:
- *               name: John Doe
- *               email: johndoe@example.com
- *               password: password123
- *               gender: male
- *               age: 30
- *               tall: 180
- *               weight: 75
- *     responses:
- *       200:
- *         description: User created successfully
- *       400:
- *         description: Email already exists or invalid password
+ *         description: Success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/UsersResponse'
  *       500:
- *         description: Server error
- */
-
-/**
- * @swagger
- * /login:
- *   post:
- *     summary: User login
- *     tags: [Authentication]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             properties:
- *               email:
- *                 type: string
- *               password:
- *                 type: string
- *             example:
- *               email: johndoe@example.com
- *               password: password123
- *     responses:
- *       200:
- *         description: User logged in successfully
- *       400:
- *         description: User not found or incorrect password
- *       500:
- *         description: Server error
- */
-
-/**
- * @swagger
- * /users:
- *   get:
- *     summary: Get all users
- *     tags: [Authentication]
- *     responses:
- *       200:
- *         description: Returns all users
+ *         description: Failed to get users
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
  */
 
 /**
  * @swagger
  * /register:
  *   post:
- *     summary: Create a new user
+ *     summary: Register a new user
  *     tags: [Authentication]
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             properties:
- *               name:
- *                 type: string
- *               email:
- *                 type: string
- *               password:
- *                 type: string
- *               gender:
- *                 type: string
- *               age:
- *                 type: number
- *               tall:
- *                 type: number
- *               weight:
- *                 type: number
- *             example:
- *               name: John Doe
- *               email: johndoe@example.com
- *               password: password123
- *               gender: male
- *               age: 30
- *               tall: 180
- *               weight: 75
+ *             $ref: '#/components/schemas/RegisterRequest'
  *     responses:
  *       200:
- *         description: User created successfully
+ *         description: Success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/SuccessResponse'
  *       400:
- *         description: Email already exists or invalid password
+ *         description: Bad Request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
  *       500:
- *         description: Server error
+ *         description: Failed to register user
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
  */
 
 /**
@@ -293,26 +216,296 @@ module.exports = router;
  *       content:
  *         application/json:
  *           schema:
- *             properties:
- *               email:
- *                 type: string
- *               password:
- *                 type: string
- *             example:
- *               email: johndoe@example.com
- *               password: password123
+ *             $ref: '#/components/schemas/LoginRequest'
  *     responses:
  *       200:
- *         description: User logged in successfully
+ *         description: Success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/LoginResponse'
  *       400:
- *         description: User not found or incorrect password
+ *         description: Bad Request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
  *       500:
- *         description: Server error
+ *         description: Failed to login user
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
  */
 
 /**
- * Calculate BMR based on gender, age, tall, and weight
- * @param {string} gender - User's gender ('L' for male, 'P' for female)
- * @param {number} age - User's age
- * @param {number} tall - User
+ * @swagger
+ * /update-bmr:
+ *   post:
+ *     summary: Update user BMR and calories
+ *     tags: [Authentication]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/UpdateBMRRequest'
+ *     responses:
+ *       200:
+ *         description: Success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/SuccessResponse'
+ *       400:
+ *         description: Bad Request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       500:
+ *         description: Failed to update BMR and calories
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ */
+
+/**
+ * @swagger
+ * components:
+ *   schemas:
+ *     UsersResponse:
+ *       type: object
+ *       properties:
+ *         users:
+ *           type: array
+ *           items:
+ *             $ref: '#/components/schemas/User'
+ *       example:
+ *         users:
+ *           - name: John Doe
+ *             email: john@example.com
+ *             gender: M
+ *             age: 30
+ *           - name: Jane Smith
+ *             email: jane@example.com
+ *             gender: F
+ *             age: 25
+ *     User:
+ *       type: object
+ *       properties:
+ *         name:
+ *           type: string
+ *         email:
+ *           type: string
+ *         gender:
+ *           type: string
+ *         age:
+ *           type: integer
+ *     RegisterRequest:
+ *       type: object
+ *       properties:
+ *         name:
+ *           type: string
+ *         email:
+ *           type: string
+ *         password:
+ *           type: string
+ *         gender:
+ *           type: string
+ *         age:
+ *           type: integer
+ *         height:
+ *           type: number
+ *         weight:
+ *           type: number
+ *       example:
+ *         name: John Doe
+ *         email: john@example.com
+ *         password: password123
+ *         gender: M
+ *         age: 30
+ *         height: 180
+ *         weight: 75
+ *     LoginRequest:
+ *       type: object
+ *       properties:
+ *         email:
+ *           type: string
+ *         password:
+ *           type: string
+ *       example:
+ *         email: john@example.com
+ *         password: password123
+ *     LoginResponse:
+ *       type: object
+ *       properties:
+ *         error:
+ *           type: boolean
+ *         message:
+ *           type: string
+ *         loginResult:
+ *           $ref: '#/components/schemas/User'
+ *       example:
+ *         error: false
+ *         message: success
+ *         loginResult:
+ *           name: John Doe
+ *           email: john@example.com
+ *           gender: M
+ *           age: 30
+ *     UpdateBMRRequest:
+ *       type: object
+ *       properties:
+ *         userId:
+ *           type: string
+ *         bmr:
+ *           type: number
+ *         calories:
+ *           type: number
+ *       example:
+ *         userId: "123456"
+ *         bmr: 1800
+ *         calories: 2000
+ *     SuccessResponse:
+ *       type: object
+ *       properties:
+ *         error:
+ *           type: boolean
+ *         message:
+ *           type: string
+ *       example:
+ *         error: false
+ *         message: User Created
+ *     ErrorResponse:
+ *       type: object
+ *       properties:
+ *         error:
+ *           type: boolean
+ *         message:
+ *           type: string
+ *       example:
+ *         error: true
+ *         message: Internal server error
+ */
+
+/**
+ * @swagger
+ * /users:
+ *   get:
+ *     summary: Get all users
+ *     tags: [Authentication]
+ *     responses:
+ *       200:
+ *         description: Success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/UsersResponse'
+ *       500:
+ *         description: Failed to get users
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ */
+
+/**
+ * @swagger
+ * /register:
+ *   post:
+ *     summary: Register a new user
+ *     tags: [Authentication]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/RegisterRequest'
+ *     responses:
+ *       200:
+ *         description: Success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/SuccessResponse'
+ *       400:
+ *         description: Bad Request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       500:
+ *         description: Failed to register user
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ */
+
+/**
+ * @swagger
+ * /login:
+ *   post:
+ *     summary: User login
+ *     tags: [Authentication]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/LoginRequest'
+ *     responses:
+ *       200:
+ *         description: Success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/LoginResponse'
+ *       400:
+ *         description: Bad Request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       500:
+ *         description: Failed to login user
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ */
+
+/**
+ * @swagger
+ * /update-bmr:
+ *   post:
+ *     summary: Update user BMR and calories
+ *     tags: [Authentication]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/UpdateBMRRequest'
+ *     responses:
+ *       200:
+ *         description: Success
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/SuccessResponse'
+ *       400:
+ *         description: Bad Request
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
+ *       500:
+ *         description: Failed to update BMR and calories
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
  */
