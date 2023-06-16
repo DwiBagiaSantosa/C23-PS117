@@ -13,7 +13,7 @@
 
 ## Installation
 - Clone this repository
-- copy images from example images to perform image classification tests 
+- Copy images from example images to perform image classification tests 
 
 ## Screenshoot
 |Register|Login|
